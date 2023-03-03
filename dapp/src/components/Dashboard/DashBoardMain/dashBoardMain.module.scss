@@ -1,0 +1,49 @@
+@use '../../../styles/abstract/' as a;
+
+.dashBoard {
+  height: calc(100vh - a.rem(80));
+  min-width: 920px;
+  @include a.centerItem;
+  position: relative;
+
+  &__textContainer,
+  &__imgContainer {
+    height: 100%;
+  }
+
+  &__textContainer {
+    width: 60%;
+    @include a.centerItem;
+
+    p {
+      font-size: a.rem(25);
+      margin-bottom: 1em;
+      @include a.breakpoint(tablet) {
+        font-size: a.rem(25);
+      }
+    }
+    h2 {
+      margin-top: 0;
+      font-size: a.rem(40);
+      @include a.breakpoint(tablet) {
+        font-size: a.rem(45);
+      }
+    }
+  }
+  &__imgContainer {
+    width: 40%;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+    }
+  }
+}
+
+.text {
+  width: 65%;
+  @include a.centerItem;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-block: 7em auto;
+}

@@ -1,0 +1,9 @@
+@use '../abstract/' as a;
+
+h1,
+h2,
+h3,
+p {
+  line-height: a.$line-height;
+  margin-top: 0;
+}

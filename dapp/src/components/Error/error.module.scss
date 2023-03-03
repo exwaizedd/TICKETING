@@ -1,0 +1,30 @@
+@use '../../styles/abstract/' as a;
+
+.error {
+  width: 100%;
+  height: calc(100vh - a.rem(80));
+  @include a.centerItem;
+  flex-direction: column;
+  // gap: 1em;
+
+  &__errorText {
+    font-size: 1.1rem;
+    text-align: center;
+    span {
+      font-size: 1.5rem;
+      text-transform: capitalize;
+      color: a.$red;
+    }
+  }
+
+  &__goBackText {
+    font-size: 1.1rem;
+    text-align: center;
+    span {
+      margin-left: 0.3em;
+      font-size: 1.2rem;
+      text-transform: capitalize;
+      color: a.$primaryColor;
+    }
+  }
+}

@@ -1,0 +1,26 @@
+@use '../../../../styles/abstract/' as a;
+
+.menuItem {
+  height: 3.8rem;
+  width: 100%;
+  list-style-type: none;
+  @include a.centerItem;
+  justify-content: flex-start;
+  padding-left: 1em;
+  gap: 1em;
+  font-size: 1.1rem;
+  text-transform: capitalize;
+  border-bottom: 1px solid a.$borderBottom;
+  &:last-of-type {
+    border-bottom: none;
+  }
+  img {
+    display: block;
+    height: 55%;
+    width: 2rem;
+  }
+  &:hover {
+    cursor: pointer;
+    opacity: a.$hover;
+  }
+}

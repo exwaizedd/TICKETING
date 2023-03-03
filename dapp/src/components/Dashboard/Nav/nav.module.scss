@@ -1,0 +1,130 @@
+@use '../../../styles/abstract/' as a;
+
+.homeNav {
+  width: 100%;
+  min-width: 920px;
+  height: a.rem(80);
+  background: hsl(180, 71%, 89%);
+  padding-inline: a.rem(50);
+  position: relative;
+  @include a.centerItem;
+  justify-content: space-between;
+
+  &__nav {
+    height: 100%;
+    width: max-content;
+    @include a.centerItem;
+    justify-content: space-between;
+
+    ul {
+      @include a.centerItem;
+      justify-content: space-between;
+      gap: a.rem(30);
+      padding-left: 0;
+      margin-left: 0;
+    }
+
+    ul > li {
+      list-style-type: none;
+      text-transform: capitalize;
+      font-size: 1.2rem;
+      color: a.$black;
+
+      &:hover {
+        cursor: pointer;
+        opacity: a.$hover;
+      }
+    }
+  }
+
+  &__iconContainer {
+    height: 100%;
+    width: max-content;
+    @include a.centerItem;
+    justify-content: space-between;
+    gap: a.rem(30);
+    margin-inline: auto a.rem(30);
+
+    button {
+      height: 2.5rem;
+      width: 2.5rem;
+      @include a.centerItem;
+      background: none;
+      border: none;
+      outline: none;
+
+      &:hover {
+        cursor: pointer;
+        opacity: a.$hover;
+      }
+
+      &:last-of-type {
+        background-color: #d4d2d2;
+        border-radius: 50%;
+        position: relative;
+
+        p {
+          font-size: 0.7em;
+          position: absolute;
+          top: 95%;
+        }
+      }
+    }
+  }
+}
+
+.menuBtn {
+  height: a.rem(30);
+  width: a.rem(30);
+  cursor: pointer;
+  position: relative;
+
+  &__burger {
+    position: absolute;
+    right: 0;
+    top: 0.8rem;
+    width: 100%;
+    height: a.rem(1.68);
+    border-radius: 50px;
+    background: #565656;
+    @include a.transition;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: a.rem(-12);
+      width: 100%;
+      height: a.rem(1.2);
+      border-radius: 50px;
+      background: a.$black;
+      @include a.transition;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      top: a.rem(12);
+      width: 100%;
+      height: a.rem(1.68);
+      border-radius: 50px;
+      background: a.$black;
+      @include a.transition;
+    }
+
+    &.open {
+      transform: rotate(720deg);
+      background: transparent;
+      @include a.transition;
+
+      &::before {
+        transform: rotate(45deg) translate(a.rem(10), a.rem(7));
+        @include a.transition;
+      }
+
+      &::after {
+        width: 100%;
+        transform: rotate(-45deg) translate(a.rem(10), a.rem(-7));
+        @include a.transition;
+      }
+    }
+  }
+}

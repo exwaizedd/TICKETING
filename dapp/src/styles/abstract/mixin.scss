@@ -1,0 +1,16 @@
+@use './functions.scss' as *;
+
+@mixin boxShadow {
+  border: 1px solid color(bg);
+  box-shadow: 0 0 8px $cardShadow;
+}
+
+@mixin transition {
+  transition: all 0.2s ease-in;
+}
+
+@mixin centerItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

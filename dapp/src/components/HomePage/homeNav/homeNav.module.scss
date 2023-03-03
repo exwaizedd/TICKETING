@@ -1,0 +1,121 @@
+@use '../../../styles/abstract/' as a;
+
+.homeNav {
+  width: 100%;
+  height: a.rem(80);
+  background: hsl(182, 69%, 77%);
+  padding-inline: a.rem(50);
+  @include a.centerItem;
+  justify-content: space-between;
+
+  &__nav {
+    height: 100%;
+    width: max-content;
+    @include a.centerItem;
+    justify-content: space-between;
+
+    ul {
+      @include a.centerItem;
+      justify-content: space-between;
+      gap: a.rem(30);
+      padding-left: 0;
+      margin-left: 0;
+    }
+
+    ul > li {
+      list-style-type: none;
+      text-transform: capitalize;
+      font-size: 1.3rem;
+      color: a.$black;
+
+      &:hover {
+        cursor: pointer;
+        opacity: a.$hover;
+      }
+    }
+  }
+
+  &__iconContainer {
+    height: 100%;
+    width: max-content;
+    @include a.centerItem;
+    justify-content: space-between;
+    gap: a.rem(30);
+    margin-inline: auto a.rem(30);
+
+    button {
+      height: 3rem;
+      width: 3rem;
+      @include a.centerItem;
+      background: none;
+      border: none;
+      outline: none;
+
+      &:hover {
+        cursor: pointer;
+        opacity: a.$hover;
+      }
+
+      &:last-of-type {
+        background-color: #d4d2d2;
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+.menuBtn {
+  height: a.rem(30);
+  width: a.rem(35);
+  cursor: pointer;
+  position: relative;
+
+  &__burger {
+    position: absolute;
+    right: 0;
+    top: 0.8rem;
+    width: 100%;
+    height: a.rem(2);
+    border-radius: 50px;
+    background: #565656;
+    @include a.transition;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: a.rem(-12);
+      width: 100%;
+      height: a.rem(1.68);
+      border-radius: 50px;
+      background: a.$black;
+      @include a.transition;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      top: a.rem(12);
+      width: 100%;
+      height: a.rem(1.68);
+      border-radius: 50px;
+      background: a.$black;
+      @include a.transition;
+    }
+
+    &.open {
+      transform: rotate(720deg);
+      background: transparent;
+      @include a.transition;
+
+      &::before {
+        transform: rotate(45deg) translate(a.rem(5), a.rem(8));
+        @include a.transition;
+      }
+
+      &::after {
+        width: 100%;
+        transform: rotate(-45deg) translate(a.rem(3), a.rem(-7));
+        @include a.transition;
+      }
+    }
+  }
+}

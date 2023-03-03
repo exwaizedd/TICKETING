@@ -1,0 +1,23 @@
+@use '../../styles/abstract/' as a;
+
+.about {
+  width: 100%;
+  height: calc(100vh - a.rem(80));
+  @include a.centerItem;
+
+  &__text {
+    font-size: 1.2rem;
+    font-weight: a.weight(regular);
+    margin-block: center;
+    text-align: center;
+
+    .pinkText {
+      text-transform: uppercase;
+      color: a.$connectBtn;
+    }
+    .blueText {
+      text-transform: uppercase;
+      color: a.$primaryColor;
+    }
+  }
+}
