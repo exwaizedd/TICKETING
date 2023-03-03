@@ -77,7 +77,7 @@ const TicketType = () => {
           action={(contract) => contract.call('mint', ticketType, ticketInfo)}
           overrides={{
             gasLimit: 3000000, // override default gas limit
-            value: ethers.utils.parseEther(value), // send 0.1 ether with the contract call
+            value: ethers.utils.parseEther('0.01'), // send 0.1 ether with the contract call
           }}
           onSuccess={(result) => alert('Success!')}
           onError={(error) => alert('Something went wrong!')}
