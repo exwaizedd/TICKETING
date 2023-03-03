@@ -1,0 +1,24 @@
+@use '../../styles/abstract/' as a;
+
+.home {
+  width: 100%;
+  height: calc(100vh - a.rem(80));
+  @include a.centerItem;
+  &__connectButton {
+    @include a.centerItem;
+    color: a.$white;
+    font-size: 1.2rem;
+    font-weight: a.weight(regular);
+    width: a.rem(200) !important;
+    height: a.rem(60) !important;
+    border-radius: a.rem(10);
+    background: a.$connectBtn !important;
+    @include a.transition;
+    border: none;
+    outline: none;
+    &:hover {
+      cursor: pointer;
+      opacity: a.$hover;
+    }
+  }
+}

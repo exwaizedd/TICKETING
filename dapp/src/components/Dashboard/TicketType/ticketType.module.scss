@@ -1,0 +1,62 @@
+@use '../../../styles/abstract/' as a;
+
+.ticketTypeContainer {
+  height: a.rem(70);
+  width: 60%;
+  @include a.centerItem;
+  padding-block: 0.5em;
+  background: hsla(0, 14%, 94%, 0.6);
+  position: absolute;
+  bottom: 22%;
+  border-radius: a.rem(24);
+
+  @include a.breakpoint(tablet) {
+    bottom: 20%;
+  }
+  &__selectTicket {
+    height: 100%;
+    width: 22%;
+    @include a.centerItem;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid a.$borderBottom;
+
+    &:last-of-type {
+      width: 34%;
+      border-right: none;
+    }
+  }
+}
+
+.amountContainer {
+  p {
+    margin-block: 0;
+    text-transform: capitalize;
+
+    &:first-of-type {
+      font-weight: a.weight(bold);
+    }
+
+    &:last-of-type {
+      font-size: 0.9rem;
+      text-transform: none;
+    }
+  }
+}
+
+.purchaseButton {
+  width: 65% !important;
+  height: a.rem(50) !important;
+  border: none !important;
+  outline: none !important;
+  border-radius: 50px !important;
+  background: a.$button !important;
+  color: a.$white !important;
+  text-transform: capitalize !important;
+  font-weight: a.weight(bold) !important;
+  cursor: pointer !important;
+
+  &:hover {
+    opacity: a.$hover !important;
+  }
+}

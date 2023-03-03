@@ -1,0 +1,21 @@
+@use 'sass:math';
+@use './color.scss' as *;
+
+$font-weights: (
+  'regular': 400,
+  'medium': 550,
+  'bold': 700,
+);
+
+@function weight($weight-name) {
+  @return map-get($font-weights, $weight-name);
+}
+
+@function rem($pixel) {
+  //divide pixel by 16
+  @if math.is-unitless($pixel) {
+    @return math.div($pixel, 16) + rem;
+  } @else {
+    @error 'Dont\'t use units when using the rem() function; only numbers';
+  }
+}
