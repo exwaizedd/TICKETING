@@ -1,4 +1,4 @@
-import TicketType from '../components/Dashboard/TicketType';
+import { ethers } from 'ethers';
 
 export const getAmount = function getAmount(ticketType) {
   switch (ticketType) {
@@ -24,3 +24,6 @@ export const convertToIntegar = function convertToIntegar(hex_string) {
 export const convertFromUnix = function convertFromUnix(number) {
   return number / 86400;
 };
+
+const weiValue = ethers.BigNumber.from('1000000000000000000'); // 1 Ether in Wei
+const etherValue = ethers.utils.formatEther(weiValue); // '1.0
