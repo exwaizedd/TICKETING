@@ -1,9 +1,25 @@
 import React from 'react';
 import { images } from '../../utils/images';
+import {
+  useContract,
+  useOwnedNFTs,
+  useContractEvents,
+} from '@thirdweb-dev/react';
+import { useAddress } from '@thirdweb-dev/react';
 import styles from './ticket.module.scss';
 import { motion } from 'framer-motion';
 
+const contractAddress = '0x89ae7403e2D38426949185D0399346a335c5d91c';
+
 const Ticket = (props) => {
+  const { contract } = useContract(contractAddress);
+  const address = useAddress();
+  const { data: ownedNFTs, error } = useOwnedNFTs(contract, address);
+  const { data: event, isLoading } = useContractEvents(
+    contract,
+    'TicketCreated'
+  );
+
   return (
     <section className={styles.ticketContainer}>
       <div className={styles.barCodeContainer}>
