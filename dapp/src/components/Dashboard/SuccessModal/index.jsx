@@ -71,7 +71,7 @@ const SuccessModal = (props) => {
           <p>
             Validity :{' '}
             <span>{`${convertFromUnix(
-              convertToIntegar(event[0].data.validUntil._hex)
+              event[0].data.validUntil._hex
             )} Days`}</span>
           </p>
           <p>
