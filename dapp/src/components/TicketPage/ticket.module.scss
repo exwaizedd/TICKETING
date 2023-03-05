@@ -8,6 +8,10 @@
   flex-direction: column;
   gap: 4em;
   padding-block: 5em;
+  &__loadingText {
+    margin: auto;
+    text-align: center;
+  }
 }
 
 .barCodeContainer {
@@ -28,11 +32,24 @@
 
   &__circleChevronLeft,
   &__circleChevronRight {
-    display: block;
+    height: 2.8rem;
     width: 2.8rem;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    background: none;
+    padding: 0;
+    @include a.centerItem;
     position: absolute;
-    top: 50%;
-    transform: translateY(-100%);
+    top: 30%;
+
+    img {
+      display: block;
+      width: 2.8rem;
+      height: 2.8rem;
+      margin: auto;
+    }
+
     &:hover {
       cursor: pointer;
       opacity: a.$hover;
@@ -41,9 +58,9 @@
 
   &__circleChevronLeft {
     left: -33%;
-    // top: 0;
-    // transform: rotate(180deg);
+    rotate: 180deg;
   }
+
   &__circleChevronRight {
     right: -33%;
   }
@@ -147,6 +164,7 @@
     }
     p {
       font-style: italic;
+      text-transform: capitalize;
       color: a.$grayText;
       font-size: 1.1rem;
       margin-block: 0;

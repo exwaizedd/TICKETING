@@ -12,4 +12,5 @@ export const images = {
   chevronLeft: '/assets/circleChevronLeft.svg',
   chevronRight: '/assets/circleChevronRight.svg',
   info: '/assets/info.svg',
+  successGif: '/success.gif',
 };

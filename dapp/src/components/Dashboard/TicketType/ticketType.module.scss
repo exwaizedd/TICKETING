@@ -3,6 +3,7 @@
 .ticketTypeContainer {
   height: a.rem(70);
   width: 60%;
+  min-width: 800px;
   @include a.centerItem;
   padding-block: 0.5em;
   background: hsla(0, 14%, 94%, 0.6);

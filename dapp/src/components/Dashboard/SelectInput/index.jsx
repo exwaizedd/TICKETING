@@ -22,10 +22,6 @@ const SelectInput = (props) => {
               {option}
             </option>
           ))}
-          {/* <option value='etherium'>etherium</option>
-          <option value='bitcoin'>bitcoin</option>
-          <option value='coinbase'>coinbase</option>
-          <option value='my coin'>my coin</option> */}
         </select>
         <img
           src={images.chevronDown}
