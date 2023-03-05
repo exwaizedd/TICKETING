@@ -56,7 +56,9 @@ const Nav = () => {
         </motion.button>
         <motion.button whileTap={{ scale: 0.85 }}>
           <img src={images.user} alt='user-icon' />
-          <p>{address.substring(0, 10)}</p>
+          <p>{`${address.substring(0, 4)}....${address.substring(
+            address.length - 2
+          )}`}</p>
         </motion.button>
       </div>
       <motion.div
