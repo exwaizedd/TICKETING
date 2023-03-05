@@ -11,7 +11,9 @@ const Wallet = (props) => {
     <section className={styles.wallet} onClick={props.onClick}>
       <header className={styles.wallet__header}>
         <img src={images.user} alt='userIcon' />{' '}
-        <p>{address.substring(0, 20)}</p>
+        <p>{`${address.substring(0, 4)}....${address.substring(
+          address.length - 2
+        )}`}</p>
       </header>
       <footer className={styles.wallet__footer}>
         <p>Total Balance</p>
