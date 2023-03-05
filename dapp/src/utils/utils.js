@@ -22,8 +22,22 @@ export const convertToIntegar = function convertToIntegar(hex_string) {
 };
 
 export const convertFromUnix = function convertFromUnix(number) {
-  return number / 86400;
+  return convertToIntegar(number) / 86400;
 };
 
-const weiValue = ethers.BigNumber.from('1000000000000000000'); // 1 Ether in Wei
-const etherValue = ethers.utils.formatEther(weiValue); // '1.0
+export const incrementIndex = function incrementIndex(num1, num2) {
+  let newNum = num1 + 1;
+  if (newNum > num2) {
+    return (newNum = 0);
+  }
+
+  return newNum;
+};
+
+export const decreaseIndex = function decreaseIndex(num1, num2) {
+  let newNum = num1 - 1;
+  if (newNum < 0) {
+    return (newNum = num2);
+  }
+  return newNum;
+};

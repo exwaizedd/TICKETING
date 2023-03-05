@@ -8,6 +8,10 @@
   flex-direction: column;
   gap: 4em;
   padding-block: 5em;
+  &__loadingText {
+    margin: auto;
+    text-align: center;
+  }
 }
 
 .barCodeContainer {
@@ -147,6 +151,7 @@
     }
     p {
       font-style: italic;
+      text-transform: capitalize;
       color: a.$grayText;
       font-size: 1.1rem;
       margin-block: 0;

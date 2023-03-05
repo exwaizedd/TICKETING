@@ -1,24 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { images } from '../../utils/images';
-import {
-  useContract,
-  useOwnedNFTs,
-  useContractEvents,
-} from '@thirdweb-dev/react';
+import { useContract, useContractEvents } from '@thirdweb-dev/react';
 import { useAddress } from '@thirdweb-dev/react';
 import styles from './ticket.module.scss';
+import {
+  convertFromUnix,
+  convertToIntegar,
+  incrementIndex,
+  decreaseIndex,
+} from '../../utils/utils';
+import { ethers } from 'ethers';
 import { motion } from 'framer-motion';
 
 const contractAddress = '0x89ae7403e2D38426949185D0399346a335c5d91c';
 
-const Ticket = (props) => {
+const Ticket = () => {
+  const [index, setIndex] = useState(0);
   const { contract } = useContract(contractAddress);
   const address = useAddress();
-  const { data: ownedNFTs, error } = useOwnedNFTs(contract, address);
   const { data: event, isLoading } = useContractEvents(
     contract,
-    'TicketCreated'
+    'TicketCreated',
+    {
+      filters: {
+        owner: address,
+      },
+    }
   );
+
+  if (isLoading || event === undefined) {
+    return (
+      <section className={styles.ticketContainer}>
+        <p className={styles.ticketContainer__loadingText}>
+          Please wait a moment <br />
+          retrieveing your tickets...
+        </p>
+      </section>
+    );
+  }
+
+  const tickets = event.filter((ticket) => ticket.data.owner !== address);
+  let ticket = tickets[index];
+
+  const weiValue = ethers.BigNumber.from(
+    `${convertToIntegar(ticket.data.amount._hex)}`
+  );
+  const etherValue = ethers.utils.formatEther(weiValue);
+
+  const handleIncreaseIndex = () => {};
 
   return (
     <section className={styles.ticketContainer}>
@@ -28,17 +57,19 @@ const Ticket = (props) => {
           alt='circleCheron_left'
           className={styles.barCodeContainer__circleChevronLeft}
           whileTap={{ scale: 0.8 }}
+          onClick={() => setIndex(incrementIndex(index, tickets.length - 1))}
         />
         <motion.img
           src={images.chevronRight}
           alt='circleCheron_Right'
           className={styles.barCodeContainer__circleChevronRight}
           whileTap={{ scale: 0.8 }}
+          onClick={() => setIndex(decreaseIndex(index, tickets.length - 1))}
         />
         <img src={images.QR} alt='Qr_Code_img' />
         <div className={styles.barCodeContainer__ticketAmount}>
           <div className={styles.infoContainer}>
-            <p className={styles.infoTitle}>Sold for {'$29.75'}</p>
+            <p className={styles.infoTitle}>Sold for {`${etherValue} ETH`}</p>
             <p className={styles.infoText}>28 january 2023, 07:33GMT +1</p>
           </div>
           <div className={styles.infoContainer}>
@@ -58,15 +89,15 @@ const Ticket = (props) => {
         <div className={styles.ticketInfoContainer__ticketDetails}>
           <div className={styles.ticketInfoContainer__ticketDetailsInfo}>
             <h3>Ticket Type:</h3>
-            <p>Voucher</p>
+            <p>{ticket.data.ticketType}</p>
           </div>
           <div className={styles.ticketInfoContainer__ticketDetailsInfo}>
             <h3>Ticket ID:</h3>
-            <p>1</p>
+            <p>{convertToIntegar(ticket.data.ticketId._hex)}</p>
           </div>
           <div className={styles.ticketInfoContainer__ticketDetailsInfo}>
             <h3>Validity</h3>
-            <p>1 Day</p>
+            <p>{`${convertFromUnix(ticket.data.validUntil._hex)} Days`}</p>
           </div>
         </div>
         <div className={styles.ticketInfoContainer__ticketDetails}>
