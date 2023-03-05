@@ -72,7 +72,7 @@ const SuccessModal = (props) => {
             Validity :{' '}
             <span>{`${convertFromUnix(
               event[0].data.validUntil._hex
-            )} Days`}</span>
+            )} Day(s)`}</span>
           </p>
           <p>
             Ticket Hash :{' '}

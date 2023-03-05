@@ -39,7 +39,7 @@ const Ticket = () => {
     );
   }
 
-  const tickets = event.filter((ticket) => ticket.data.owner !== address);
+  const tickets = event.filter((ticket) => ticket.data.owner === address);
   let ticket = tickets[index];
 
   const weiValue = ethers.BigNumber.from(
@@ -47,25 +47,24 @@ const Ticket = () => {
   );
   const etherValue = ethers.utils.formatEther(weiValue);
 
-  const handleIncreaseIndex = () => {};
-
   return (
     <section className={styles.ticketContainer}>
       <div className={styles.barCodeContainer}>
-        <motion.img
-          src={images.chevronRight}
-          alt='circleCheron_left'
+        <motion.button
           className={styles.barCodeContainer__circleChevronLeft}
           whileTap={{ scale: 0.8 }}
           onClick={() => setIndex(incrementIndex(index, tickets.length - 1))}
-        />
-        <motion.img
-          src={images.chevronRight}
-          alt='circleCheron_Right'
+        >
+          <img src={images.chevronRight} alt='circleCheron_left' />
+        </motion.button>
+        <motion.button
           className={styles.barCodeContainer__circleChevronRight}
           whileTap={{ scale: 0.8 }}
           onClick={() => setIndex(decreaseIndex(index, tickets.length - 1))}
-        />
+        >
+          <img src={images.chevronRight} alt='circleCheron_Right' />
+        </motion.button>
+
         <img src={images.QR} alt='Qr_Code_img' />
         <div className={styles.barCodeContainer__ticketAmount}>
           <div className={styles.infoContainer}>
@@ -97,7 +96,7 @@ const Ticket = () => {
           </div>
           <div className={styles.ticketInfoContainer__ticketDetailsInfo}>
             <h3>Validity</h3>
-            <p>{`${convertFromUnix(ticket.data.validUntil._hex)} Days`}</p>
+            <p>{`${convertFromUnix(ticket.data.validUntil._hex)} Day(s)`}</p>
           </div>
         </div>
         <div className={styles.ticketInfoContainer__ticketDetails}>
