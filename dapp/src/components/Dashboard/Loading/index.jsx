@@ -4,7 +4,7 @@ const Loading = () => {
   return (
     <section className={styles.successModal}>
       <div className={styles.successModal__cardContainer}>
-        <p>Transaction in progress...</p>
+        <p>Transaction in progress....</p>
       </div>
     </section>
   );
