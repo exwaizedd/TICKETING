@@ -8,14 +8,4 @@ export default defineConfig({
     global: 'globalThis',
     'process.env': {},
   },
-
-  optimizeDeps: {
-    include: ['@babel/polyfill'],
-  },
-  build: {
-    outDir: 'dist',
-    rollupOptions: {
-      input: 'src/main.js',
-    },
-  },
 });
