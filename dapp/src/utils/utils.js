@@ -1,5 +1,3 @@
-import { ethers } from 'ethers';
-
 export const getAmount = function getAmount(ticketType) {
   switch (ticketType) {
     case 'voucher':

@@ -24,8 +24,7 @@
     img {
       display: block;
       width: 1rem;
-      position: relative;
-      right: 2em;
+      margin-right: 2em;
       @include a.transition;
     }
 
@@ -34,7 +33,7 @@
     }
 
     select {
-      width: 100%;
+      width: 90%;
       text-transform: capitalize;
       text-align: center;
       border: none;

@@ -1,0 +1,26 @@
+@use '../../../styles/abstract/' as a;
+
+.successModal {
+  width: 100%;
+  min-width: 920px;
+  height: 100%;
+  top: 0;
+  position: fixed;
+  z-index: 2;
+  background: a.$modalBackground;
+  @include a.centerItem;
+
+  &__cardContainer {
+    width: a.rem(400);
+    min-height: 10vh;
+    background-color: a.$white;
+    border-radius: a.rem(20);
+    @include a.centerItem;
+
+    p {
+      width: max-content;
+      text-align: center;
+      margin: auto;
+    }
+  }
+}

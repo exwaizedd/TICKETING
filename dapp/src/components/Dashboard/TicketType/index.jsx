@@ -5,6 +5,7 @@ import SelectInput from '../SelectInput';
 import styles from './ticketType.module.scss';
 import { convertToUnix, getAmount } from '../../../utils/utils';
 import SuccessModal from '../SuccessModal';
+import Loading from '../Loading';
 
 const contractAddress = '0x89ae7403e2D38426949185D0399346a335c5d91c';
 
@@ -92,15 +93,8 @@ const TicketType = () => {
           </Web3Button>
         </div>
       </div>
-      {onSuccessful && (
-        <SuccessModal
-          setOnSuccessful={setOnSuccessful}
-          type={ticketInfo.type}
-          validity={ticketInfo.validity}
-          amount={value}
-          setTicketInfo={setTicketInfo}
-        />
-      )}
+      {isLoading && <Loading />}
+      {onSuccessful && <SuccessModal setOnSuccessful={setOnSuccessful} />}
     </>
   );
 };
