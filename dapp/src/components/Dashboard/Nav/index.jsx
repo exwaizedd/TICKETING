@@ -12,6 +12,7 @@ const Nav = () => {
   const [showWallet, setShowWallet] = useState(false);
   const address = useAddress();
   const navigate = useNavigate();
+  const adminAccess = process.env.ACCESS_VALUE;
 
   const handleNavigate = () => {
     navigate('/dashboard/ticket');
@@ -42,8 +43,7 @@ const Nav = () => {
           <motion.li whileTap={{ scale: 0.8 }}>
             <Link to='/about'>About Us</Link>
           </motion.li>
-          {address.toString().toLowerCase() ===
-            '0xb91131c2712e8af7e19d0a617a01ae4a8573e9a1' && (
+          {address.toString() === adminAccess && (
             <motion.li whileTap={{ scale: 0.8 }}>
               <Link to='/admin'>Admin</Link>
             </motion.li>
