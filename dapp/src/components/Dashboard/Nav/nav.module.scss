@@ -27,7 +27,7 @@
     ul > li {
       list-style-type: none;
       text-transform: capitalize;
-      font-size: 1.2rem;
+      font-size: a.$font-18;
       color: a.$black;
 
       &:hover {
@@ -74,7 +74,7 @@
 }
 
 .menuBtn {
-  height: a.rem(30);
+  height: a.rem(25);
   width: a.rem(30);
   cursor: pointer;
   position: relative;
@@ -84,17 +84,17 @@
     right: 0;
     top: 0.8rem;
     width: 100%;
-    height: a.rem(1.68);
+    height: a.rem(2);
     border-radius: 50px;
-    background: #565656;
+    background: a.$black;
     @include a.transition;
 
     &::before {
       content: '';
       position: absolute;
-      top: a.rem(-12);
+      top: a.rem(-10);
       width: 100%;
-      height: a.rem(1.2);
+      height: a.rem(2);
       border-radius: 50px;
       background: a.$black;
       @include a.transition;
@@ -102,9 +102,9 @@
     &::after {
       content: '';
       position: absolute;
-      top: a.rem(12);
+      top: a.rem(10);
       width: 100%;
-      height: a.rem(1.68);
+      height: a.rem(2);
       border-radius: 50px;
       background: a.$black;
       @include a.transition;
@@ -116,13 +116,13 @@
       @include a.transition;
 
       &::before {
-        transform: rotate(45deg) translate(a.rem(10), a.rem(7));
+        transform: rotate(45deg) translate(a.rem(10), a.rem(4));
         @include a.transition;
       }
 
       &::after {
         width: 100%;
-        transform: rotate(-45deg) translate(a.rem(10), a.rem(-7));
+        transform: rotate(-45deg) translate(a.rem(10), a.rem(-4));
         @include a.transition;
       }
     }

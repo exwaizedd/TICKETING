@@ -1,19 +1,11 @@
 import React from 'react';
 import MenuItem from '../MenuItem';
-import { useDisconnect, Web3Button } from '@thirdweb-dev/react';
-// import ThirdWeb from '@thirdweb/thirdweb';
+import { useDisconnect } from '@thirdweb-dev/react';
 import { images } from '../../../../utils/images';
 import styles from './dropDownMenu.module.scss';
 
 const DropDownMenu = (props) => {
   const disconnect = useDisconnect();
-  // const thirdweb = ThirdWeb.create({ network: 'mainnet' });
-
-  // async function handleLogout() {
-  //   const accounts = await thirdweb.getAccounts();
-  //   await thirdweb.forget(accounts);
-  //   setIsLoggedOut(true);
-  // }
 
   return (
     <section className={styles.DropDownMenu}>

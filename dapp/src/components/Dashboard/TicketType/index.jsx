@@ -3,43 +3,50 @@ import { useContractWrite, useContract, Web3Button } from '@thirdweb-dev/react';
 import { ethers } from 'ethers';
 import SelectInput from '../SelectInput';
 import styles from './ticketType.module.scss';
-import { convertToUnix, getAmount } from '../../../utils/utils';
+import { getAmount, contractAddress } from '../../../utils/utils';
 import SuccessModal from '../SuccessModal';
 import Loading from '../Loading';
-
-const contractAddress = '0x89ae7403e2D38426949185D0399346a335c5d91c';
+import Input from '../Inputs';
 
 const TicketType = () => {
   const [onSuccessful, setOnSuccessful] = useState(false);
-  const [ticketInfo, setTicketInfo] = useState({
-    type: '',
-    validity: '',
-  });
+  const [onError, setOnError] = useState(false);
+  const [ticketTypeOf, setTicketTypeOf] = useState(null);
+  const [validity, setValidity] = useState(null);
 
   const { contract } = useContract(contractAddress);
   const { mutateAsync, isLoading, error } = useContractWrite(contract, 'mint');
 
-  function handleChange(e) {
-    const value = e.target.value;
-
-    setTicketInfo({
-      ...ticketInfo,
-      [e.target.name]: value,
-    });
-  }
   const ticketType = ['voucher', 'meal ticket'];
-  const validity = ['1 Day', '2 Days', '3 Days', '4 Days'];
-  const { cryptoValue, value } = getAmount(ticketInfo.type);
-  const _validUntil = convertToUnix(ticketInfo.validity);
-  const _ticketType = ticketInfo.type;
+  const { cryptoValue, value } = getAmount(ticketTypeOf);
+  const _validUntil = Date.parse(validity) / 1000;
+  const _ticketType = ticketTypeOf;
+  const now = new Date();
+  const minDate = now.toISOString().slice(0, 10); // Today's date in ISO format
+  const maxDate = new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000)
+    .toISOString()
+    .slice(0, 10); // Three days from now in ISO format
+
+  // Handle date change
+  const handleDateChange = (e) => {
+    const validity = e.target.value;
+    // Check if the selected date is within the allowed range
+    if (validity >= minDate && validity <= maxDate) {
+      setValidity(validity);
+    } else {
+      alert('Please select a date within the next three days.');
+    }
+  };
 
   const handleSuccess = (result) => {
     setOnSuccessful(true);
-    setTicketInfo({
-      ...ticketInfo,
-      type: '',
-      validity: '',
-    });
+    setTicketTypeOf('select type');
+    console.log(result);
+  };
+
+  const handleError = (error) => {
+    setOnError(true);
+    console.log(error.message);
   };
 
   return (
@@ -51,8 +58,8 @@ const TicketType = () => {
             name='type'
             id='type'
             options={ticketType}
-            onChange={(e) => handleChange(e)}
-            value={ticketInfo.value}
+            onChange={(e) => setTicketTypeOf(e.target.value)}
+            value={ticketTypeOf ? ticketTypeOf : 'select type'}
           />
         </div>
         <div
@@ -62,13 +69,15 @@ const TicketType = () => {
           <p>{value ? `${value}ETH` : 'please select type'}</p>
         </div>
         <div className={styles.ticketTypeContainer__selectTicket}>
-          <SelectInput
+          <Input
             label='validity'
             name='validity'
             id='validity'
-            options={validity}
-            onChange={(e) => handleChange(e)}
-            value={ticketInfo.amount}
+            type='date'
+            value={validity ? validity : ''}
+            onChange={(e) => handleDateChange(e)}
+            // min={minDate}
+            // max={maxDate}
           />
         </div>
         <div className={styles.ticketTypeContainer__selectTicket}>
@@ -85,16 +94,19 @@ const TicketType = () => {
               ])
             }
             onSuccess={(result) => handleSuccess(result)}
-            onError={(error) => alert('Something went wrong!')}
-            isDisabled={!ticketInfo.type || !ticketInfo.validity ? true : false}
-            className={styles.purchaseButton}
+            onError={(error) => handleError(error)}
+            isDisabled={!ticketTypeOf ? true : false}
+            className={`${styles.purchaseButton} ${
+              !ticketTypeOf && styles.isDisabled
+            }`}
           >
             Purchase Ticket
           </Web3Button>
         </div>
       </div>
-      {isLoading && <Loading />}
+      {isLoading && <Loading text={'Transaction in progress....'} />}
       {onSuccessful && <SuccessModal setOnSuccessful={setOnSuccessful} />}
+      {onError && <SuccessModal setOnError={setOnError} error={true} />}
     </>
   );
 };

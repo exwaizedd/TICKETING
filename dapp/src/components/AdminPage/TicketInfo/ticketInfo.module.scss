@@ -1,0 +1,44 @@
+@use '../../../styles/abstract/' as a;
+
+.article {
+  width: max-content;
+  min-width: 500px;
+  min-height: 55vh;
+  background-color: a.$white;
+  border-radius: a.rem(20);
+  @include a.centerItem;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  &__loadingText {
+    margin: auto;
+    text-align: center;
+  }
+}
+
+.title {
+  margin-block: 0;
+  margin-top: 2em;
+  margin-inline: auto;
+}
+
+.infoContainer {
+  width: 100%;
+  height: max-content;
+  margin-top: 1em;
+  padding-inline: 2em;
+  @include a.centerItem;
+  flex-direction: column;
+  align-items: flex-start;
+
+  p {
+    width: max-content;
+    @include a.centerItem;
+    gap: 0.5em;
+    font-weight: a.weight(regular);
+    span {
+      // font-style: italic;
+      color: a.$grayText;
+    }
+  }
+}

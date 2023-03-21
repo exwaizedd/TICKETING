@@ -24,7 +24,9 @@
     img {
       display: block;
       width: 1rem;
-      margin-right: 2em;
+      // margin-right: 4em;
+      position: relative;
+      right: 2em;
       @include a.transition;
     }
 

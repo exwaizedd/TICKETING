@@ -1,0 +1,129 @@
+@use '../../../styles/abstract/' as a;
+
+.adminBody {
+  width: 100%;
+  padding-inline: 2em 2em;
+  min-height: 40vh;
+  margin-top: 5em;
+  @include a.centerItem;
+  align-items: flex-start;
+  justify-content: space-between;
+  @include a.breakpoint(desktop) {
+    padding-inline: 8em 8em;
+  }
+
+  &__ticketAddressContainer {
+    width: max-content;
+    height: 100%;
+    margin-bottom: 3em;
+    @include a.centerItem;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 1em;
+
+    h2 {
+      margin-block: 0.3em;
+      font-size: 1.5rem;
+    }
+    .address {
+      width: max-content;
+      color: white;
+      padding: 0.6em 1em;
+      border-radius: 50px;
+      background: hsla(0, 9%, 7%, 1);
+      margin-right: auto;
+    }
+    .balance {
+      width: max-content;
+      margin-top: -1.5em;
+      margin-right: auto;
+    }
+  }
+}
+
+.TicketInfoContainer {
+  margin-top: 1em;
+  min-width: 100%;
+  @include a.centerItem;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.inputContainer {
+  width: 10rem;
+  margin-top: 4em;
+  @include a.centerItem;
+  align-items: flex-start;
+  gap: 0.5em;
+  padding: 0;
+  position: relative;
+
+  span {
+    position: absolute;
+    top: -1.5em;
+    left: 0;
+    font-size: a.$font-12;
+    color: red;
+    display: none;
+  }
+
+  &__label {
+    margin-block: auto;
+  }
+
+  &__input {
+    width: 40%;
+    height: 2rem;
+    font-size: 0.9rem;
+    margin-block: auto;
+    border: 1px solid a.$black;
+    padding-left: 0.5em;
+    margin-inline: 0 auto;
+    outline: none;
+    border-radius: a.rem(5);
+    background: transparent;
+    text-transform: capitalize;
+
+    &:invalid[focused='true'] {
+      border: a.rem(1) solid red;
+    }
+
+    &:invalid[focused='true'] ~ span {
+      display: block;
+    }
+
+    &:focus {
+      border: 1px solid a.$borderBottom;
+    }
+
+    &::placeholder {
+      font-size: 0.85rem;
+      text-align: center;
+    }
+  }
+}
+
+.web3button {
+  margin-inline: 0 auto !important;
+  width: 65% !important;
+  height: a.rem(50) !important;
+  border: none !important;
+  outline: none !important;
+  border-radius: 10px !important;
+  background: hsla(0, 92%, 47%, 1) !important;
+  color: a.$white !important;
+  text-transform: capitalize !important;
+  font-weight: a.weight(bold) !important;
+  cursor: pointer !important;
+
+  &:hover {
+    opacity: a.$hover !important;
+  }
+}
+
+.disabled {
+  background: hsla(0, 55%, 79%, 0.7) !important;
+  cursor: not-allowed !important;
+}

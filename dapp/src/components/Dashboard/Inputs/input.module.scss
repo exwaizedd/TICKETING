@@ -5,22 +5,27 @@
   height: 100%;
   @include a.centerItem;
   flex-direction: column;
+  gap: 0em;
 
   &__label {
     text-transform: capitalize;
-    margin: auto 0;
+    margin: 0;
     font-weight: a.weight(bold);
   }
 
   &__input {
     width: 80%;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     margin-block: 0;
     padding-block: 0.1em;
-    padding-left: 1em;
+    padding-left: 0;
     border-radius: a.rem(10);
-    background: a.$ticketBackground;
+    background: transparent;
     text-transform: capitalize;
+    @include a.breakpoint(tablet) {
+      padding-left: 1em;
+    }
+
     &:focus {
       border: 1px solid a.$borderBottom;
     }

@@ -1,0 +1,85 @@
+@use '../../styles/abstract/' as a;
+
+.adminSection {
+  width: 100%;
+  min-width: 920px;
+  height: 100%;
+  @include a.centerItem;
+  flex-direction: column;
+}
+
+.adminAccessContainer {
+  width: 100%;
+  height: 11rem;
+  padding-inline: 2em 2em;
+  background: a.$primaryColor;
+  @include a.centerItem;
+  justify-content: space-between;
+  @include a.breakpoint(desktop) {
+    padding-inline: 8em 8em;
+  }
+
+  &__linksContainer {
+    width: max-content;
+    background: a.$primaryColor;
+    @include a.centerItem;
+    gap: 1em;
+    // margin-left: 8em;
+
+    .link {
+      font-size: a.$font-18;
+    }
+
+    .button {
+      padding: 0.6em 1.7em;
+      outline: none;
+      border-radius: 5px;
+      border: none;
+
+      background: white;
+      font-size: a.$font-18;
+      cursor: pointer;
+      @include a.transition;
+      &:hover {
+        background: rgb(29, 26, 26);
+        color: white;
+      }
+    }
+  }
+
+  &__AdminInfoContainer {
+    width: 22rem;
+    height: 7.5rem;
+    @include a.centerItem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 0.3em;
+    margin: 4em;
+    margin-right: 0;
+    padding: 1em 2.5em;
+    border-radius: a.rem(20);
+    background: hsla(0, 9%, 7%, 1);
+    p {
+      margin-block: 0;
+      color: hsla(0, 0%, 100%, 1);
+    }
+
+    .text_twitter {
+      @include a.centerItem;
+      gap: 0.05em;
+      align-items: flex-start;
+
+      img {
+        display: block;
+        width: 1.4rem;
+        margin-left: 0.5em;
+      }
+    }
+  }
+
+  .adminText {
+    font-weight: lighter;
+    font-style: italic;
+  }
+}

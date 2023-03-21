@@ -13,4 +13,6 @@ export const images = {
   chevronRight: '/assets/circleChevronRight.svg',
   info: '/assets/info.svg',
   successGif: '/success.gif',
+  ethereum: '/assets/ethereum.svg',
+  twitterBadge: '/assets/twitterBadge.svg',
 };
