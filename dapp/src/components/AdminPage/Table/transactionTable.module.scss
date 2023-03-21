@@ -1,0 +1,71 @@
+@use '../../../styles/abstract/' as a;
+
+.tableSection {
+  width: 100%;
+  min-height: 10vh;
+  @include a.centerItem;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 1em;
+  padding-inline: 2em;
+  @include a.breakpoint(tablet) {
+    padding-inline: 8em;
+  }
+}
+
+.titleContainer {
+  width: max-content;
+  @include a.centerItem;
+  align-items: flex-start;
+  margin-right: auto;
+  margin-bottom: 1em;
+  gap: 0.5em;
+  img {
+    display: block;
+    margin-block: auto;
+    width: 1.9rem;
+  }
+
+  h2 {
+    margin-block: auto;
+    font-size: 1.5rem;
+  }
+}
+
+.table {
+  width: 97%;
+  margin: 1em auto;
+  border-collapse: collapse;
+
+  thead tr {
+    border-bottom: 1px solid gray;
+
+    .address {
+      width: 32rem;
+    }
+  }
+
+  thead tr th {
+    letter-spacing: 0.07em;
+    padding: a.rem(8);
+    text-align: left;
+  }
+
+  tbody tr td {
+    letter-spacing: 0.05em;
+    padding: a.rem(10);
+    text-align: left;
+  }
+
+  tbody {
+    .infoRow,
+    .noTicket {
+      text-align: center;
+      padding-block: a.rem(20);
+    }
+
+    .noTicket {
+      font-weight: a.weight(bold);
+    }
+  }
+}

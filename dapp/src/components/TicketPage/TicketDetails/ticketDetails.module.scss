@@ -1,4 +1,4 @@
-@use '../../styles/abstract/' as a;
+@use '../../../styles/abstract/' as a;
 
 .ticketContainer {
   width: 100%;
@@ -12,12 +12,6 @@
     margin: auto;
     text-align: center;
   }
-
-  &__noTicketText {
-    margin-inline: auto;
-    margin-block: 3em auto;
-    text-align: center;
-  }
 }
 
 .barCodeContainer {
@@ -26,7 +20,7 @@
   height: 50vh;
   margin-inline: auto;
   background: a.$ticketBackground;
-  border-radius: a.rem(30);
+  border-radius: a.rem(10);
   position: relative;
 
   img {
@@ -124,9 +118,11 @@
 .ticketInfoContainer {
   width: 65%;
   height: 45vh;
+  border-radius: 10px;
   @include a.centerItem;
-  flex-direction: column;
-  gap: 2.5em;
+  // flex-direction: column;
+  // gap: 2.5em;
+  padding-left: 4.7em;
   background: a.$ticketBackground;
   position: relative;
 
@@ -151,11 +147,14 @@
   }
 
   &__ticketDetails {
-    width: 100%;
-    height: max-content;
-    padding-inline: 4.5em;
+    width: 33.33%;
+    height: 65%;
+    margin-top: 4em;
     @include a.centerItem;
+    flex-direction: column;
     justify-content: space-between;
+    align-items: flex-start;
+    padding-block: 0 2em;
   }
 
   &__ticketDetailsInfo {
@@ -163,13 +162,12 @@
     @include a.centerItem;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5em;
+    gap: 1.3em;
     h3 {
       margin-block: 0;
       font-size: 1.1rem;
     }
     p {
-      font-style: italic;
       text-transform: capitalize;
       color: a.$grayText;
       font-size: 1.1rem;
@@ -178,10 +176,28 @@
   }
 }
 
-.modifier {
-  margin-left: 10em;
-}
-
 .noTicket {
   margin-top: 5em;
+}
+
+.confirmUseButton {
+  width: 65% !important;
+  height: a.rem(50) !important;
+  border: none !important;
+  outline: none !important;
+  border-radius: 10px !important;
+  background: a.$button !important;
+  color: a.$white !important;
+  text-transform: capitalize !important;
+  font-weight: a.weight(bold) !important;
+  cursor: pointer !important;
+
+  &:hover {
+    opacity: a.$hover !important;
+  }
+}
+
+.isDisabled {
+  cursor: not-allowed !important;
+  background: rgb(248, 190, 226) !important;
 }

@@ -1,10 +1,13 @@
 import React from 'react';
 import { useContract, useContractEvents } from '@thirdweb-dev/react';
 import styles from './successModal.module.scss';
-import { convertToIntegar, convertFromUnix } from '../../../utils/utils';
+import {
+  convertToIntegar,
+  convertFromUnix,
+  convertUnixToTime,
+  contractAddress,
+} from '../../../utils/utils';
 import { ethers } from 'ethers';
-
-const contractAddress = '0x89ae7403e2D38426949185D0399346a335c5d91c';
 
 const SuccessModal = (props) => {
   const { contract } = useContract(contractAddress);
@@ -12,6 +15,19 @@ const SuccessModal = (props) => {
     contract,
     'TicketCreated'
   );
+
+  if (props.error) {
+    return (
+      <section
+        className={styles.successModal}
+        onClick={() => props.setOnError(false)}
+      >
+        <div className={styles.successModal__cardContainer}>
+          <p className={styles.errorText}>Oops! something went wrong</p>
+        </div>
+      </section>
+    );
+  }
 
   if (isLoading || event === undefined) {
     return (
@@ -63,16 +79,14 @@ const SuccessModal = (props) => {
           </p>
           <p>
             Ticket ID :{' '}
-            <span>{convertToIntegar(event[0].data.ticketId._hex)}</span>
+            <span>{convertToIntegar(event[0].data._ticketId._hex)}</span>
           </p>
           <p>
             Ticket amount : <span>{`${etherValue} ETH`}</span>
           </p>
           <p>
             Validity :{' '}
-            <span>{`${convertFromUnix(
-              event[0].data.validUntil._hex
-            )} Day(s)`}</span>
+            <span>{`${convertUnixToTime(event[0].data.validUntil._hex)}`}</span>
           </p>
           <p>
             Ticket Hash :{' '}

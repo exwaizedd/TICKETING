@@ -61,3 +61,8 @@
     opacity: a.$hover !important;
   }
 }
+
+.isDisabled {
+  cursor: not-allowed !important;
+  background: rgb(231, 151, 201) !important;
+}

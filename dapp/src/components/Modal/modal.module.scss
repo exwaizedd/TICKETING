@@ -1,0 +1,13 @@
+@use '../../styles/abstract/' as a;
+
+.modalContainer {
+  width: 100%;
+  min-width: 920px;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: 2;
+  background: a.$modalBackground;
+  @include a.centerItem;
+}
