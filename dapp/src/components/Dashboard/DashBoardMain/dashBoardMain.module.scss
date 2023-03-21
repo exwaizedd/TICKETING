@@ -24,9 +24,9 @@
     }
     h2 {
       margin-top: 0;
-      font-size: a.rem(40);
+      font-size: 2.4rem;
       @include a.breakpoint(tablet) {
-        font-size: a.rem(45);
+        font-size: 2.7rem;
       }
     }
   }
@@ -41,9 +41,12 @@
 }
 
 .text {
-  width: 65%;
+  width: 80%;
   @include a.centerItem;
   flex-direction: column;
   align-items: flex-start;
   margin-block: 7em auto;
+  @include a.breakpoint(tablet) {
+    width: 65%;
+  }
 }

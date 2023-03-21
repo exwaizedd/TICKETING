@@ -1,4 +1,3 @@
-import { ConnectWallet } from '@thirdweb-dev/react';
 import HomePage from './pages/HomePage';
 import DashBoard from './pages/DashBoard';
 import { Routes, Route } from 'react-router-dom';
@@ -6,7 +5,10 @@ import DashBoardMain from './components/Dashboard/DashBoardMain';
 import TicketPage from './pages/TicketPage';
 import ErrorPage from './pages/ErrorPage';
 import AboutUsPage from './pages/AboutUsPage';
+import ProfilePage from './pages/ProfilePage';
 import RequireAuth from './RequireAuth';
+import RequireAdminAuth from './RequireAminAuth';
+import AdminPage from './pages/AdminPage';
 import { useAddress } from '@thirdweb-dev/react';
 
 export default function Home() {
@@ -19,9 +21,13 @@ export default function Home() {
         <Route path='dashboard' element={<DashBoard />}>
           <Route index element={<DashBoardMain />} />
           <Route path='ticket' element={<TicketPage />} />
+          <Route path='profile' element={<ProfilePage />} />
         </Route>
       </Route>
       <Route path='/about' element={<AboutUsPage />}></Route>
+      <Route path='/admin/*' element={<RequireAdminAuth address={address} />}>
+        <Route path='' element={<AdminPage />} />
+      </Route>
       <Route path='*' element={<ErrorPage />}></Route>
     </Routes>
   );

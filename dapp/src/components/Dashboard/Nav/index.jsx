@@ -36,12 +36,18 @@ const Nav = () => {
       <nav className={styles.homeNav__nav}>
         <ul>
           <motion.li whileTap={{ scale: 0.8 }}>
-            <Link to='/dashboard'>home</Link>
+            <Link to='/dashboard'>Dashboard</Link>
           </motion.li>
 
           <motion.li whileTap={{ scale: 0.8 }}>
             <Link to='/about'>About Us</Link>
           </motion.li>
+          {address.toString().toLowerCase() ===
+            '0xb91131c2712e8af7e19d0a617a01ae4a8573e9a1' && (
+            <motion.li whileTap={{ scale: 0.8 }}>
+              <Link to='/admin'>Admin</Link>
+            </motion.li>
+          )}
         </ul>
       </nav>
       <div className={styles.homeNav__iconContainer}>
@@ -55,10 +61,13 @@ const Nav = () => {
           <img src={images.wallet} alt='wallet-icon' />
         </motion.button>
         <motion.button whileTap={{ scale: 0.85 }}>
-          <img src={images.user} alt='user-icon' />
-          <p>{`${address.substring(0, 4)}....${address.substring(
-            address.length - 2
-          )}`}</p>
+          <Link to='profile'>
+            {' '}
+            <img src={images.user} alt='user-icon' />
+            <p>{`${address.substring(0, 4)}....${address.substring(
+              address.length - 2
+            )}`}</p>
+          </Link>
         </motion.button>
       </div>
       <motion.div
