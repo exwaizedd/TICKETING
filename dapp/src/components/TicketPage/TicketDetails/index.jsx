@@ -6,7 +6,6 @@ import {
   useContractWrite,
   Web3Button,
 } from '@thirdweb-dev/react';
-import { contractAddress } from '../../../utils/utils';
 import { images } from '../../../utils/images';
 
 import { ethers } from 'ethers';
@@ -15,6 +14,8 @@ import {
   convertUnixToTime,
   incrementIndex,
   decreaseIndex,
+  contractAddress,
+  getValidity,
 } from '../../../utils/utils';
 import { motion } from 'framer-motion';
 import Modal from '../../Modal';
@@ -143,7 +144,7 @@ const TicketDetails = (props) => {
           <div className={styles.ticketInfoContainer__ticketDetails}>
             <div className={styles.ticketInfoContainer__ticketDetailsInfo}>
               <h3>Validity</h3>
-              <p>{convertUnixToTime(validity)}</p>
+              <p>{confirmTicketUse ? 'Ticket Used' : getValidity(validity)}</p>
             </div>
             <div className={styles.ticketInfoContainer__ticketDetailsInfo}>
               <Web3Button

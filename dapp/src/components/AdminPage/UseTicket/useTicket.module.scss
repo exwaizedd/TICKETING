@@ -14,6 +14,9 @@
     margin: auto;
     text-align: center;
   }
+  p {
+    line-height: 2;
+  }
 }
 
 .success_checkmark {
@@ -178,9 +181,20 @@ h3 {
 .error {
   min-height: 30vh;
   padding: 2em;
+  @include a.centerItem;
   .errorText {
     color: red;
     font-size: a.$font-18;
+  }
+
+  ul {
+    margin-inline: auto;
+    margin-top: 0.1em;
+  }
+
+  &__tryAgain {
+    text-align: left;
+    margin-right: auto;
   }
 }
 

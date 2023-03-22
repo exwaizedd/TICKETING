@@ -41,12 +41,10 @@ const TicketType = () => {
   const handleSuccess = (result) => {
     setOnSuccessful(true);
     setTicketTypeOf('select type');
-    console.log(result);
   };
 
   const handleError = (error) => {
     setOnError(true);
-    console.log(error.message);
   };
 
   return (
