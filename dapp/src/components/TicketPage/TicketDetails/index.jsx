@@ -144,7 +144,11 @@ const TicketDetails = (props) => {
           <div className={styles.ticketInfoContainer__ticketDetails}>
             <div className={styles.ticketInfoContainer__ticketDetailsInfo}>
               <h3>Validity</h3>
-              <p>{confirmTicketUse ? 'Ticket Used' : getValidity(validity)}</p>
+              <p>
+                {confirmTicketUse && getValidity(validity) !== 'Expired'
+                  ? 'Ticket Used'
+                  : getValidity(validity)}
+              </p>
             </div>
             <div className={styles.ticketInfoContainer__ticketDetailsInfo}>
               <Web3Button
