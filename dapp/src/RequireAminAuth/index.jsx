@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
 
 const RequireAdminAuth = (props) => {
-  const adminAccess = process.env.ACCESS_VALUE;
+  const adminAccess = import.meta.env.VITE_ACCESS_VALUE;
 
   return props.address === undefined ? (
     <Navigate to='/' />

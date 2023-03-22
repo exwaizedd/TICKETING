@@ -1,15 +1,15 @@
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
-import dotenv from 'dotenv';
+import { defineConfig, loadEnv } from 'vite';
 
-dotenv.config();
-
-const env = dotenv.config().parsed;
-
-export default defineConfig({
-  plugins: [react()],
-  define: Object.keys(env).reduce((acc, key) => {
-    acc[`process.env.${key}`] = JSON.stringify(env[key]);
-    return acc;
-  }, {}),
+export default defineConfig(({ command, mode }) => {
+  // Load env file based on `mode` in the current working directory.
+  // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
+  const env = loadEnv(mode, process.cwd(), '');
+  return {
+    // vite config
+    plugins: [react()],
+    define: {
+      'process.env': {},
+    },
+  };
 });

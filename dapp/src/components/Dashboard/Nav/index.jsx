@@ -12,7 +12,7 @@ const Nav = () => {
   const [showWallet, setShowWallet] = useState(false);
   const address = useAddress();
   const navigate = useNavigate();
-  const adminAccess = process.env.ACCESS_VALUE;
+  const adminAccess = import.meta.env.VITE_ACCESS_VALUE;
 
   const handleNavigate = () => {
     navigate('/dashboard/ticket');
