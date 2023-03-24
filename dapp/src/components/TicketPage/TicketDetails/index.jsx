@@ -59,13 +59,11 @@ const TicketDetails = (props) => {
     dateCreated = data[4],
     ticketID = data[5]._hex,
     ipfs = data[6],
-    confirmTicketUse = data[7],
-    used = data[8];
+    used = data[7],
+    confirmTicketUse = data[8];
 
   const weiValue = ethers.BigNumber.from(`${convertToIntegar(amount)}`);
   const etherValue = ethers.utils.formatEther(weiValue);
-
-  console.log(confirmTicketUse, used);
 
   return (
     <>
@@ -154,12 +152,15 @@ const TicketDetails = (props) => {
               <h3>Validity Until</h3>
               <p className={styles.validityText}>
                 {convertUnixToTime(validity)}{' '}
-                {confirmTicketUse !== used &&
+                {confirmTicketUse &&
+                  !used &&
                   checkValidity(validity) === 'Expired' && (
                     <span className={styles.expiredText}>Expired</span>
                   )}
-                {(confirmTicketUse && used) ||
-                (confirmTicketUse && checkValidity(validity) === 'Expired') ? (
+                {(confirmTicketUse &&
+                  used &&
+                  checkValidity(validity) !== 'Expired') ||
+                confirmTicketUse === used ? (
                   <span>Ticket Used</span>
                 ) : (
                   ''
@@ -173,11 +174,12 @@ const TicketDetails = (props) => {
                 onSuccess={(result) => handleSuccess(result)}
                 onError={(error) => handleError(error)}
                 isDisabled={
-                  used || checkValidity(validity) === 'Expired' ? true : false
+                  confirmTicketUse || checkValidity(validity) === 'Expired'
+                    ? true
+                    : false
                 }
                 className={`${styles.confirmUseButton} ${
-                  (used || checkValidity(validity) === 'Expired') &&
-                  styles.isDisabled
+                  confirmTicketUse && styles.isDisabled
                 }`}
               >
                 Use Ticket

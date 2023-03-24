@@ -43,7 +43,7 @@ const SuccessModal = (props) => {
               <div className={styles.icon_fix}></div>
             </div>
           </div>
-          <h3>Transaction Successful </h3>
+          <h3 className={styles.centerHeader}>Transaction Successful </h3>
           <p>Retrieving Ticket Info...</p>
         </div>
       </section>

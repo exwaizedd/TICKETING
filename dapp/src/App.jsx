@@ -6,6 +6,7 @@ import TicketPage from './pages/TicketPage';
 import ErrorPage from './pages/ErrorPage';
 import AboutUsPage from './pages/AboutUsPage';
 import ProfilePage from './pages/ProfilePage';
+import About from './pages/About';
 import RequireAuth from './RequireAuth';
 import RequireAdminAuth from './RequireAminAuth';
 import AdminPage from './pages/AdminPage';
@@ -22,6 +23,7 @@ export default function Home() {
           <Route index element={<DashBoardMain />} />
           <Route path='ticket' element={<TicketPage />} />
           <Route path='profile' element={<ProfilePage />} />
+          {/* <Route path='aboutus' element={<About />} /> */}
         </Route>
       </Route>
       <Route path='/about' element={<AboutUsPage />}></Route>

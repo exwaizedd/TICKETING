@@ -62,7 +62,7 @@ const TicketInfo = (props) => {
         <p>
           Expiry Date :{' '}
           <span className={styles.validityText}>
-            {convertUnixToTime(dateCreated)}
+            {convertUnixToTime(validity)}
             {confirmTicketUse !== used &&
               checkValidity(validity) === 'Expired' && (
                 <span className={styles.expiredText}>Expired</span>
