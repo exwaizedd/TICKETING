@@ -2,8 +2,9 @@
 
 .about {
   width: 100%;
-  max-width: 920px;
+  min-width: 920px;
   height: calc(100vh - a.rem(80));
+  margin: auto;
   @include a.centerItem;
 
   &__text {

@@ -45,7 +45,7 @@ const Nav = () => {
           </motion.li>
 
           <motion.li whileTap={{ scale: 0.8 }}>
-            <Link to='/about'>About Us</Link>
+            <Link to='/dashboard/about'>About Us</Link>
           </motion.li>
           {address.toString() === adminAccess && (
             <motion.li whileTap={{ scale: 0.8 }}>

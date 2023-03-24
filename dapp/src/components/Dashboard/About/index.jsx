@@ -1,8 +1,7 @@
 import React from 'react';
 import styles from './aboutUs.module.scss';
-import Nav from '../Nav';
 
-const AboutUs = () => {
+const About = () => {
   return (
     <>
       <section className={styles.about}>
@@ -19,4 +18,4 @@ const AboutUs = () => {
   );
 };
 
-export default AboutUs;
+export default About;

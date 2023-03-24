@@ -157,14 +157,7 @@ const TicketDetails = (props) => {
                   checkValidity(validity) === 'Expired' && (
                     <span className={styles.expiredText}>Expired</span>
                   )}
-                {(confirmTicketUse &&
-                  used &&
-                  checkValidity(validity) !== 'Expired') ||
-                confirmTicketUse === used ? (
-                  <span>Ticket Used</span>
-                ) : (
-                  ''
-                )}
+                {confirmTicketUse && used ? <span>Ticket Used</span> : ''}
               </p>
             </div>
             <div className={styles.ticketInfoContainer__ticketDetailsInfo}>
