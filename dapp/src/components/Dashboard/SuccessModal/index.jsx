@@ -54,6 +54,16 @@ const SuccessModal = (props) => {
   // );
   // const etherValue = ethers.utils.formatEther(weiValue);
 
+  if (!event || !event[0] || !event[0].data || !event[0].data.amount) {
+    return (
+      <section className={styles.successModal}>
+        <div className={styles.successModal__cardContainer}>
+          <p className={styles.errorText}>Error: Event data is missing.</p>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section
       className={styles.successModal}
