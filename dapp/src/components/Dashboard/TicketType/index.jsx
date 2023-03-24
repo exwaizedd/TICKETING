@@ -105,7 +105,6 @@ const TicketType = () => {
       {isLoading && <Loading text={'Transaction in progress....'} />}
       {onSuccessful && <SuccessModal setOnSuccessful={setOnSuccessful} />}
       {onError && <SuccessModal setOnError={setOnError} error={true} />}
-      <SuccessModal setOnSuccessful={setOnSuccessful} />
     </>
   );
 };
