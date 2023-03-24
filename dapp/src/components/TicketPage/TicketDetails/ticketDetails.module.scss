@@ -165,6 +165,8 @@
     gap: 1.3em;
     h3 {
       margin-block: 0;
+      margin-inline: 0 auto;
+      text-align: left;
       font-size: 1.1rem;
     }
     p {
@@ -173,6 +175,20 @@
       font-size: 1.1rem;
       margin-block: 0;
     }
+  }
+}
+
+.validityText {
+  @include a.centerItem;
+  gap: 0.4em;
+
+  span {
+    font-size: a.$font-13;
+    color: green;
+  }
+
+  .expiredText {
+    color: red;
   }
 }
 

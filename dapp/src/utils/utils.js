@@ -37,6 +37,35 @@ export const convertUnixToTime = function (hex_string) {
   return `${day}/${month}/${year}`;
 };
 
+// function checkValidity(hexTimestamp) {
+//   const timestamp = parseInt(hexTimestamp);
+//   const expiryDate = new Date(timestamp * 1000);
+//   const currentDate = new Date();
+
+//   if (currentDate > expiryDate) {
+//     return `${convertUnixToTime(hexTimestamp)} Expired`;
+//   } else {
+//     const daysLeft = Math.ceil(
+//       (expiryDate - currentDate) / (1000 * 60 * 60 * 24)
+//     );
+//     return `Expires in ${daysLeft} day${
+//       daysLeft === 1 ? '' : 's'
+//     } (${expiryDate.toLocaleDateString()})`;
+//   }
+// }
+
+export const checkValidity = function checkValidity(hexTimestamp) {
+  const timestamp = parseInt(hexTimestamp);
+  const expiryDate = new Date(timestamp * 1000);
+  const currentDate = new Date();
+
+  if (currentDate > expiryDate) {
+    return `Expired`;
+  } else {
+    ('ticket used');
+  }
+};
+
 export const getValidity = function getValidity(validity) {
   // Set the date to check
   const dateToCheck = new Date(convertUnixToTime(validity));

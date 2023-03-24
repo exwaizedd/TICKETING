@@ -42,3 +42,18 @@
     }
   }
 }
+
+.validityText {
+  @include a.centerItem;
+  gap: 0.4em;
+
+  .span {
+    font-size: a.$font-13;
+    color: green;
+  }
+
+  .expiredText {
+    font-size: a.$font-13;
+    color: red;
+  }
+}

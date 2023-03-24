@@ -15,7 +15,7 @@ import {
   incrementIndex,
   decreaseIndex,
   contractAddress,
-  getValidity,
+  checkValidity,
 } from '../../../utils/utils';
 import { motion } from 'framer-motion';
 import Modal from '../../Modal';
@@ -64,6 +64,8 @@ const TicketDetails = (props) => {
 
   const weiValue = ethers.BigNumber.from(`${convertToIntegar(amount)}`);
   const etherValue = ethers.utils.formatEther(weiValue);
+
+  console.log(confirmTicketUse, used);
 
   return (
     <>
@@ -128,7 +130,13 @@ const TicketDetails = (props) => {
             </div>
             <div className={styles.ticketInfoContainer__ticketDetailsInfo}>
               <h3>Status</h3>
-              <p>{used ? 'Used' : 'Not Used'}</p>
+              <p>
+                {used !== confirmTicketUse
+                  ? 'Confirmed for use'
+                  : confirmTicketUse
+                  ? 'used'
+                  : 'Not Used'}
+              </p>
             </div>
           </div>
           <div className={styles.ticketInfoContainer__ticketDetails}>
@@ -143,11 +151,19 @@ const TicketDetails = (props) => {
           </div>
           <div className={styles.ticketInfoContainer__ticketDetails}>
             <div className={styles.ticketInfoContainer__ticketDetailsInfo}>
-              <h3>Validity</h3>
-              <p>
-                {confirmTicketUse && getValidity(validity) !== 'Expired'
-                  ? 'Ticket Used'
-                  : getValidity(validity)}
+              <h3>Validity Until</h3>
+              <p className={styles.validityText}>
+                {convertUnixToTime(validity)}{' '}
+                {confirmTicketUse !== used &&
+                  checkValidity(validity) === 'Expired' && (
+                    <span className={styles.expiredText}>Expired</span>
+                  )}
+                {(confirmTicketUse && used) ||
+                (confirmTicketUse && checkValidity(validity) === 'Expired') ? (
+                  <span>Ticket Used</span>
+                ) : (
+                  ''
+                )}
               </p>
             </div>
             <div className={styles.ticketInfoContainer__ticketDetailsInfo}>
@@ -156,9 +172,12 @@ const TicketDetails = (props) => {
                 action={() => mutateAsync([ticketID])}
                 onSuccess={(result) => handleSuccess(result)}
                 onError={(error) => handleError(error)}
-                isDisabled={used ? true : false}
+                isDisabled={
+                  used || checkValidity(validity) === 'Expired' ? true : false
+                }
                 className={`${styles.confirmUseButton} ${
-                  used && styles.isDisabled
+                  (used || checkValidity(validity) === 'Expired') &&
+                  styles.isDisabled
                 }`}
               >
                 Use Ticket

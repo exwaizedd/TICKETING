@@ -75,7 +75,6 @@ const AdminBody = (props) => {
     setShowError(true);
     setError(error.message);
   };
-
   return (
     <>
       <div className={styles.adminBody}>
@@ -89,7 +88,7 @@ const AdminBody = (props) => {
             {isLoadingContractBalance
               ? 'loading balance...'
               : `${(
-                  convertFromUnix(contractBalance._hex) / Math.pow(10, 18)
+                  parseInt(contractBalance._hex, 16) / Math.pow(10, 18)
                 ).toFixed(4)} ETH`}
           </p>
           <div className={styles.TicketInfoContainer}>
