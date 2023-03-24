@@ -23,6 +23,10 @@ const Nav = () => {
     navigate('/dashboard');
     setShowLinks(false);
   };
+  const handleProfileNavigate = () => {
+    navigate('/dashboard/profile');
+    setShowLinks(false);
+  };
 
   const handleshowWallet = () => {
     setShowLinks(false);
@@ -88,6 +92,7 @@ const Nav = () => {
           handleshowWallet={() => handleshowWallet()}
           handleNavigate={() => handleNavigate()}
           handleHomeNavigate={() => handleHomeNavigate()}
+          handleProfileNavigate={() => handleProfileNavigate()}
         />
       )}
       {showWallet && <Wallet onClick={() => setShowWallet(false)} />}

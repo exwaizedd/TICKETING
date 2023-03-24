@@ -15,7 +15,11 @@ const DropDownMenu = (props) => {
           title='home'
           onClick={props.handleHomeNavigate}
         />
-        <MenuItem image={images.user} title='profile' />
+        <MenuItem
+          image={images.user}
+          title='profile'
+          onClick={props.handleProfileNavigate}
+        />
         <MenuItem
           image={images.ticket}
           title='ticket'
