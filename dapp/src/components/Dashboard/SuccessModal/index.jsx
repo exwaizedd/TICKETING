@@ -3,7 +3,6 @@ import { useContract, useContractEvents } from '@thirdweb-dev/react';
 import styles from './successModal.module.scss';
 import {
   convertToIntegar,
-  convertFromUnix,
   convertUnixToTime,
   contractAddress,
 } from '../../../utils/utils';
@@ -50,10 +49,10 @@ const SuccessModal = (props) => {
     );
   }
 
-  const weiValue = ethers.BigNumber.from(
-    `${convertToIntegar(event[0].data.amount._hex)}`
-  );
-  const etherValue = ethers.utils.formatEther(weiValue);
+  // const weiValue = ethers.BigNumber.from(
+  //   `${convertToIntegar(event[0].data.amount._hex)}`
+  // );
+  // const etherValue = ethers.utils.formatEther(weiValue);
 
   return (
     <section
@@ -82,7 +81,10 @@ const SuccessModal = (props) => {
             <span>{convertToIntegar(event[0].data._ticketId._hex)}</span>
           </p>
           <p>
-            Ticket amount : <span>{`${etherValue} ETH`}</span>
+            Ticket amount :{' '}
+            <span>{`${
+              convertToIntegar(event[0].data.amount._hex) / Math.pow(10, 18)
+            } ETH`}</span>
           </p>
           <p>
             Validity :{' '}
