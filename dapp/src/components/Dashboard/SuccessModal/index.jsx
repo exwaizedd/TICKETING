@@ -58,7 +58,9 @@ const SuccessModal = (props) => {
     return (
       <section className={styles.successModal}>
         <div className={styles.successModal__cardContainer}>
-          <p className={styles.errorText}>Error: Event data is missing.</p>
+          <p className={styles.errorText}>
+            Event data is not available at the moment.
+          </p>
         </div>
       </section>
     );

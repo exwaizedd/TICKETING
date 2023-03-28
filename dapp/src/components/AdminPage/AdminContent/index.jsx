@@ -64,6 +64,7 @@ const AdminBody = (props) => {
   };
   const handleError = (Error) => {
     setShowError(true);
+    console.log(Error);
   };
 
   const handleWithdrawalSuccess = (result) => {

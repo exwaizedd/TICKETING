@@ -23,14 +23,13 @@ import SuccessModal from '../SuccessModal';
 
 const TicketDetails = (props) => {
   const [isSuccessful, setIsSuccessful] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [showError, setShowError] = useState(false);
   const _ticketId = Number(props.ticketIDs[props.index]);
   const { contract } = useContract(contractAddress);
-  const {
-    mutateAsync,
-    error,
-    isLoading: load,
-  } = useContractWrite(contract, 'confirmTicketUse');
+  const { mutateAsync, isLoading: load } = useContractWrite(
+    contract,
+    'confirmTicketUse'
+  );
   const { data, isLoading } = useContractRead(contract, 'getTicket', _ticketId);
 
   const handleSuccess = (result) => {
@@ -39,8 +38,8 @@ const TicketDetails = (props) => {
   };
 
   const handleError = (error) => {
-    setIsError(true);
-    alert('Something went wrong');
+    setShowError(true);
+    alert('oops something went wrong');
   };
 
   if (isLoading || data === undefined) {
@@ -152,11 +151,14 @@ const TicketDetails = (props) => {
               <h3>Validity Until</h3>
               <p className={styles.validityText}>
                 {convertUnixToTime(validity)}{' '}
-                {confirmTicketUse &&
+                {((confirmTicketUse &&
                   !used &&
-                  checkValidity(validity) === 'Expired' && (
-                    <span className={styles.expiredText}>Expired</span>
-                  )}
+                  checkValidity(validity) === 'Expired') ||
+                  (!used &&
+                    !confirmTicketUse &&
+                    checkValidity(validity) === 'Expired')) && (
+                  <span className={styles.expiredText}>Expired</span>
+                )}
                 {confirmTicketUse && used ? <span>Ticket Used</span> : ''}
               </p>
             </div>
@@ -172,7 +174,8 @@ const TicketDetails = (props) => {
                     : false
                 }
                 className={`${styles.confirmUseButton} ${
-                  confirmTicketUse && styles.isDisabled
+                  (confirmTicketUse || checkValidity(validity) === 'Expired') &&
+                  styles.isDisabled
                 }`}
               >
                 Use Ticket
@@ -186,14 +189,14 @@ const TicketDetails = (props) => {
           <SuccessModal isLoading={true} />
         </Modal>
       )}
-      {isError && (
-        <Modal onClick={setIsError(false)}>
-          <SuccessModal error={isError} />
+      {showError && (
+        <Modal onClick={setShowError(false)}>
+          <SuccessModal error={true} isLoading={false} />
         </Modal>
       )}
       {isSuccessful && (
         <Modal onClick={setIsSuccessful(false)}>
-          <SuccessModal isSuccessful={isSuccessful} />
+          <SuccessModal isSuccessful={isSuccessful} isLoading={false} />
         </Modal>
       )}
     </>
