@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+
+
 // File: @thirdweb-dev/contracts/extension/interface/IContractMetadata.sol
 
 
@@ -25,138 +27,6 @@ interface IContractMetadata {
 
     /// @dev Emitted when the contract URI is updated.
     event ContractURIUpdated(string prevURI, string newURI);
-}
-
-// File: @thirdweb-dev/contracts/extension/ContractMetadata.sol
-
-
-pragma solidity ^0.8.0;
-
-/// @author thirdweb
-
-
-/**
- *  @title   Contract Metadata
- *  @notice  Thirdweb's `ContractMetadata` is a contract extension for any base contracts. It lets you set a metadata URI
- *           for you contract.
- *           Additionally, `ContractMetadata` is necessary for NFT contracts that want royalties to get distributed on OpenSea.
- */
-
-abstract contract ContractMetadata is IContractMetadata {
-    /// @notice Returns the contract metadata URI.
-    string public override contractURI;
-
-    /**
-     *  @notice         Lets a contract admin set the URI for contract-level metadata.
-     *  @dev            Caller should be authorized to setup contractURI, e.g. contract admin.
-     *                  See {_canSetContractURI}.
-     *                  Emits {ContractURIUpdated Event}.
-     *
-     *  @param _uri     keccak256 hash of the role. e.g. keccak256("TRANSFER_ROLE")
-     */
-    function setContractURI(string memory _uri) external override {
-        if (!_canSetContractURI()) {
-            revert("Not authorized");
-        }
-
-        _setupContractURI(_uri);
-    }
-
-    /// @dev Lets a contract admin set the URI for contract-level metadata.
-    function _setupContractURI(string memory _uri) internal {
-        string memory prevURI = contractURI;
-        contractURI = _uri;
-
-        emit ContractURIUpdated(prevURI, _uri);
-    }
-
-    /// @dev Returns whether contract metadata can be set in the given execution context.
-    function _canSetContractURI() internal view virtual returns (bool);
-}
-
-// File: @openzeppelin/contracts/token/ERC20/IERC20.sol
-
-
-// OpenZeppelin Contracts (last updated v4.6.0) (token/ERC20/IERC20.sol)
-
-pragma solidity ^0.8.0;
-
-/**
- * @dev Interface of the ERC20 standard as defined in the EIP.
- */
-interface IERC20 {
-    /**
-     * @dev Emitted when `value` tokens are moved from one account (`from`) to
-     * another (`to`).
-     *
-     * Note that `value` may be zero.
-     */
-    event Transfer(address indexed from, address indexed to, uint256 value);
-
-    /**
-     * @dev Emitted when the allowance of a `spender` for an `owner` is set by
-     * a call to {approve}. `value` is the new allowance.
-     */
-    event Approval(address indexed owner, address indexed spender, uint256 value);
-
-    /**
-     * @dev Returns the amount of tokens in existence.
-     */
-    function totalSupply() external view returns (uint256);
-
-    /**
-     * @dev Returns the amount of tokens owned by `account`.
-     */
-    function balanceOf(address account) external view returns (uint256);
-
-    /**
-     * @dev Moves `amount` tokens from the caller's account to `to`.
-     *
-     * Returns a boolean value indicating whether the operation succeeded.
-     *
-     * Emits a {Transfer} event.
-     */
-    function transfer(address to, uint256 amount) external returns (bool);
-
-    /**
-     * @dev Returns the remaining number of tokens that `spender` will be
-     * allowed to spend on behalf of `owner` through {transferFrom}. This is
-     * zero by default.
-     *
-     * This value changes when {approve} or {transferFrom} are called.
-     */
-    function allowance(address owner, address spender) external view returns (uint256);
-
-    /**
-     * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.
-     *
-     * Returns a boolean value indicating whether the operation succeeded.
-     *
-     * IMPORTANT: Beware that changing an allowance with this method brings the risk
-     * that someone may use both the old and the new allowance by unfortunate
-     * transaction ordering. One possible solution to mitigate this race
-     * condition is to first reduce the spender's allowance to 0 and set the
-     * desired value afterwards:
-     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
-     *
-     * Emits an {Approval} event.
-     */
-    function approve(address spender, uint256 amount) external returns (bool);
-
-    /**
-     * @dev Moves `amount` tokens from `from` to `to` using the
-     * allowance mechanism. `amount` is then deducted from the caller's
-     * allowance.
-     *
-     * Returns a boolean value indicating whether the operation succeeded.
-     *
-     * Emits a {Transfer} event.
-     */
-    function transferFrom(
-        address from,
-        address to,
-        uint256 amount
-    ) external returns (bool);
 }
 
 // File: @openzeppelin/contracts/utils/math/Math.sol
@@ -576,6 +446,225 @@ library Strings {
      */
     function toHexString(address addr) internal pure returns (string memory) {
         return toHexString(uint256(uint160(addr)), _ADDRESS_LENGTH);
+    }
+}
+
+// File: @openzeppelin/contracts/utils/Context.sol
+
+
+// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)
+
+pragma solidity ^0.8.0;
+
+/**
+ * @dev Provides information about the current execution context, including the
+ * sender of the transaction and its data. While these are generally available
+ * via msg.sender and msg.data, they should not be accessed in such a direct
+ * manner, since when dealing with meta-transactions the account sending and
+ * paying for execution may not be the actual sender (as far as an application
+ * is concerned).
+ *
+ * This contract is only required for intermediate, library-like contracts.
+ */
+abstract contract Context {
+    function _msgSender() internal view virtual returns (address) {
+        return msg.sender;
+    }
+
+    function _msgData() internal view virtual returns (bytes calldata) {
+        return msg.data;
+    }
+}
+
+// File: @openzeppelin/contracts/access/Ownable.sol
+
+
+// OpenZeppelin Contracts (last updated v4.7.0) (access/Ownable.sol)
+
+pragma solidity ^0.8.0;
+
+
+/**
+ * @dev Contract module which provides a basic access control mechanism, where
+ * there is an account (an owner) that can be granted exclusive access to
+ * specific functions.
+ *
+ * By default, the owner account will be the one that deploys the contract. This
+ * can later be changed with {transferOwnership}.
+ *
+ * This module is used through inheritance. It will make available the modifier
+ * `onlyOwner`, which can be applied to your functions to restrict their use to
+ * the owner.
+ */
+abstract contract Ownable is Context {
+    address private _owner;
+
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+
+    /**
+     * @dev Initializes the contract setting the deployer as the initial owner.
+     */
+    constructor() {
+        _transferOwnership(_msgSender());
+    }
+
+    /**
+     * @dev Throws if called by any account other than the owner.
+     */
+    modifier onlyOwner() {
+        _checkOwner();
+        _;
+    }
+
+    /**
+     * @dev Returns the address of the current owner.
+     */
+    function owner() public view virtual returns (address) {
+        return _owner;
+    }
+
+    /**
+     * @dev Throws if the sender is not the owner.
+     */
+    function _checkOwner() internal view virtual {
+        require(owner() == _msgSender(), "Ownable: caller is not the owner");
+    }
+
+    /**
+     * @dev Leaves the contract without owner. It will not be possible to call
+     * `onlyOwner` functions anymore. Can only be called by the current owner.
+     *
+     * NOTE: Renouncing ownership will leave the contract without an owner,
+     * thereby removing any functionality that is only available to the owner.
+     */
+    function renounceOwnership() public virtual onlyOwner {
+        _transferOwnership(address(0));
+    }
+
+    /**
+     * @dev Transfers ownership of the contract to a new account (`newOwner`).
+     * Can only be called by the current owner.
+     */
+    function transferOwnership(address newOwner) public virtual onlyOwner {
+        require(newOwner != address(0), "Ownable: new owner is the zero address");
+        _transferOwnership(newOwner);
+    }
+
+    /**
+     * @dev Transfers ownership of the contract to a new account (`newOwner`).
+     * Internal function without access restriction.
+     */
+    function _transferOwnership(address newOwner) internal virtual {
+        address oldOwner = _owner;
+        _owner = newOwner;
+        emit OwnershipTransferred(oldOwner, newOwner);
+    }
+}
+
+// File: @openzeppelin/contracts/security/Pausable.sol
+
+
+// OpenZeppelin Contracts (last updated v4.7.0) (security/Pausable.sol)
+
+pragma solidity ^0.8.0;
+
+
+/**
+ * @dev Contract module which allows children to implement an emergency stop
+ * mechanism that can be triggered by an authorized account.
+ *
+ * This module is used through inheritance. It will make available the
+ * modifiers `whenNotPaused` and `whenPaused`, which can be applied to
+ * the functions of your contract. Note that they will not be pausable by
+ * simply including this module, only once the modifiers are put in place.
+ */
+abstract contract Pausable is Context {
+    /**
+     * @dev Emitted when the pause is triggered by `account`.
+     */
+    event Paused(address account);
+
+    /**
+     * @dev Emitted when the pause is lifted by `account`.
+     */
+    event Unpaused(address account);
+
+    bool private _paused;
+
+    /**
+     * @dev Initializes the contract in unpaused state.
+     */
+    constructor() {
+        _paused = false;
+    }
+
+    /**
+     * @dev Modifier to make a function callable only when the contract is not paused.
+     *
+     * Requirements:
+     *
+     * - The contract must not be paused.
+     */
+    modifier whenNotPaused() {
+        _requireNotPaused();
+        _;
+    }
+
+    /**
+     * @dev Modifier to make a function callable only when the contract is paused.
+     *
+     * Requirements:
+     *
+     * - The contract must be paused.
+     */
+    modifier whenPaused() {
+        _requirePaused();
+        _;
+    }
+
+    /**
+     * @dev Returns true if the contract is paused, and false otherwise.
+     */
+    function paused() public view virtual returns (bool) {
+        return _paused;
+    }
+
+    /**
+     * @dev Throws if the contract is paused.
+     */
+    function _requireNotPaused() internal view virtual {
+        require(!paused(), "Pausable: paused");
+    }
+
+    /**
+     * @dev Throws if the contract is not paused.
+     */
+    function _requirePaused() internal view virtual {
+        require(paused(), "Pausable: not paused");
+    }
+
+    /**
+     * @dev Triggers stopped state.
+     *
+     * Requirements:
+     *
+     * - The contract must not be paused.
+     */
+    function _pause() internal virtual whenNotPaused {
+        _paused = true;
+        emit Paused(_msgSender());
+    }
+
+    /**
+     * @dev Returns to normal state.
+     *
+     * Requirements:
+     *
+     * - The contract must be paused.
+     */
+    function _unpause() internal virtual whenPaused {
+        _paused = false;
+        emit Unpaused(_msgSender());
     }
 }
 
@@ -1122,37 +1211,10 @@ interface IERC721Metadata is IERC721 {
     function tokenURI(uint256 tokenId) external view returns (string memory);
 }
 
-// File: @openzeppelin/contracts/utils/Context.sol
-
-
-// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)
-
-pragma solidity ^0.8.0;
-
-/**
- * @dev Provides information about the current execution context, including the
- * sender of the transaction and its data. While these are generally available
- * via msg.sender and msg.data, they should not be accessed in such a direct
- * manner, since when dealing with meta-transactions the account sending and
- * paying for execution may not be the actual sender (as far as an application
- * is concerned).
- *
- * This contract is only required for intermediate, library-like contracts.
- */
-abstract contract Context {
-    function _msgSender() internal view virtual returns (address) {
-        return msg.sender;
-    }
-
-    function _msgData() internal view virtual returns (bytes calldata) {
-        return msg.data;
-    }
-}
-
 // File: @openzeppelin/contracts/token/ERC721/ERC721.sol
 
 
-// OpenZeppelin Contracts (last updated v4.8.0) (token/ERC721/ERC721.sol)
+// OpenZeppelin Contracts (last updated v4.8.2) (token/ERC721/ERC721.sol)
 
 pragma solidity ^0.8.0;
 
@@ -1619,18 +1681,9 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
     function _beforeTokenTransfer(
         address from,
         address to,
-        uint256, /* firstTokenId */
+        uint256 firstTokenId,
         uint256 batchSize
-    ) internal virtual {
-        if (batchSize > 1) {
-            if (from != address(0)) {
-                _balances[from] -= batchSize;
-            }
-            if (to != address(0)) {
-                _balances[to] += batchSize;
-            }
-        }
-    }
+    ) internal virtual {}
 
     /**
      * @dev Hook that is called after any token transfer. This includes minting and burning. If {ERC721Consecutive} is
@@ -1652,6 +1705,18 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
         uint256 firstTokenId,
         uint256 batchSize
     ) internal virtual {}
+
+    /**
+     * @dev Unsafe write access to the balances, used by extensions that "mint" tokens using an {ownerOf} override.
+     *
+     * WARNING: Anyone calling this MUST ensure that the balances remain consistent with the ownership. The invariant
+     * being that for any address `a` the value returned by `balanceOf(a)` must be equal to the number of tokens such
+     * that `ownerOf(tokenId)` is `a`.
+     */
+    // solhint-disable-next-line func-name-mixedcase
+    function __unsafe_increaseBalance(address account, uint256 amount) internal {
+        _balances[account] += amount;
+    }
 }
 
 // File: @openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol
@@ -1815,93 +1880,7 @@ abstract contract ERC721Enumerable is ERC721, IERC721Enumerable {
     }
 }
 
-// File: @openzeppelin/contracts/access/Ownable.sol
-
-
-// OpenZeppelin Contracts (last updated v4.7.0) (access/Ownable.sol)
-
-pragma solidity ^0.8.0;
-
-
-/**
- * @dev Contract module which provides a basic access control mechanism, where
- * there is an account (an owner) that can be granted exclusive access to
- * specific functions.
- *
- * By default, the owner account will be the one that deploys the contract. This
- * can later be changed with {transferOwnership}.
- *
- * This module is used through inheritance. It will make available the modifier
- * `onlyOwner`, which can be applied to your functions to restrict their use to
- * the owner.
- */
-abstract contract Ownable is Context {
-    address private _owner;
-
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
-
-    /**
-     * @dev Initializes the contract setting the deployer as the initial owner.
-     */
-    constructor() {
-        _transferOwnership(_msgSender());
-    }
-
-    /**
-     * @dev Throws if called by any account other than the owner.
-     */
-    modifier onlyOwner() {
-        _checkOwner();
-        _;
-    }
-
-    /**
-     * @dev Returns the address of the current owner.
-     */
-    function owner() public view virtual returns (address) {
-        return _owner;
-    }
-
-    /**
-     * @dev Throws if the sender is not the owner.
-     */
-    function _checkOwner() internal view virtual {
-        require(owner() == _msgSender(), "Ownable: caller is not the owner");
-    }
-
-    /**
-     * @dev Leaves the contract without owner. It will not be possible to call
-     * `onlyOwner` functions anymore. Can only be called by the current owner.
-     *
-     * NOTE: Renouncing ownership will leave the contract without an owner,
-     * thereby removing any functionality that is only available to the owner.
-     */
-    function renounceOwnership() public virtual onlyOwner {
-        _transferOwnership(address(0));
-    }
-
-    /**
-     * @dev Transfers ownership of the contract to a new account (`newOwner`).
-     * Can only be called by the current owner.
-     */
-    function transferOwnership(address newOwner) public virtual onlyOwner {
-        require(newOwner != address(0), "Ownable: new owner is the zero address");
-        _transferOwnership(newOwner);
-    }
-
-    /**
-     * @dev Transfers ownership of the contract to a new account (`newOwner`).
-     * Internal function without access restriction.
-     */
-    function _transferOwnership(address newOwner) internal virtual {
-        address oldOwner = _owner;
-        _owner = newOwner;
-        emit OwnershipTransferred(oldOwner, newOwner);
-    }
-}
-
-// File: contracts/TicketingSystem.sol
-
+// File: contracts/TicketingSystemNew.sol
 
 
 pragma solidity ^0.8.9;
@@ -1910,76 +1889,204 @@ pragma solidity ^0.8.9;
 
 
 
-contract TicketingSystem is ERC721Enumerable, Ownable {
+contract TicketingSystemNew is ERC721Enumerable, Ownable {
 
-    //Define Ticket Structure
+//Define structure of a ticket
     struct Ticket {
-        string ticketType;
-        uint256 validUntil;
-        address owner;
-        uint amount;
-        bool used;
+        string ticketType;  //ticket type
+        uint256 validUntil; //expiry date in unix time
+        address owner;      //address of ticket owner 
+        uint256 amount;     //amount on ticket
+        uint256 timestamp;  //time of transaction
+        string ipfsAddress; //URI for QRCode metadata
+        uint256 ticketId;   //ticketID
+        bool used;          //boolean indicating if the ticket has been used
+        bool confirmTicketUse;      //boolean indicating if the ticket has been authorized by the owner to use
     }
 
-    struct OwnerInfo{
-        uint256 [] TicketIds;
-        uint TotalTickets;
+
+    struct OwnerInfo {
+        uint256[] ticketIds;
+        uint256 totalTickets;
     }
 
-    //Define mapping for tickets
-    mapping(uint256 => Ticket) public TICKET;
+    mapping(uint256 => Ticket) public tickets; 
+    mapping(address => OwnerInfo) public ownerInfo;
+    uint256[] public usedTicketIds;
 
-    mapping (address => OwnerInfo) public OWNERINFO;
-    
     using Strings for uint256;
-    string public baseURI;
+    string public baseURI = "";
     string public baseExtension = ".json";
     uint256 public maxSupply = 1000000000000;
     uint256 public maxMintAmount = 1;
     bool public paused = false;
     uint256 public ticketId;
 
-    event TicketCreated(string ticketType, uint256 validUntil,address owner, uint amount);
-    event TicketUsed(uint TicketId, address user);
+    //Event emitted after a ticket is minted
 
-    constructor() ERC721("TicketingSystem", "TICKET") {}
+    event TicketCreated(
+        string ticketType,
+        uint256 validUntil,
+        address owner,
+        uint256 amount,
+        uint256 _ticketId,
+        uint256 timestamp,
+        string ipfsAddress
+    ); 
 
 
-    //Function to mint a ticket 
-    function mint(string memory _ticketType, uint256 _validUntil) public payable {  
+    event TicketUsed(uint256 _ticketId, address user);
 
-        Ticket storage newTicket = TICKET[ticketId];
-        OwnerInfo storage ownerData = OWNERINFO[msg.sender];
-        newTicket.ticketType = _ticketType;
-        newTicket.validUntil =_validUntil;
-        newTicket.owner = msg.sender;
-        newTicket.amount = msg.value;
-        ownerData.TicketIds.push(ticketId);
-        ownerData.TotalTickets += 1;
-        _safeMint(msg.sender, ticketId);
+    event ConfirmedTicketUse(uint256 _ticketId, address user);
+
+    event ContractPaused(address account);
+
+    event ContractUnpaused(address account);
+
+    constructor() ERC721("TicketingSystem", "E-TICKET") {}
+
+    //Function to mint a new ticket
+
+    function mint(string memory _ticketType, uint256 _validUntil) public payable {
+    require(block.timestamp <= _validUntil, "Invalid ticket validity");
+    require(paused == false, "You Cannot Purchase Tickets Now. System is Temporarily Unavailable");
+    require(ticketId < maxSupply, "Maximum number of tickets already minted");
+
+    Ticket storage newTicket = tickets[ticketId];
+    OwnerInfo storage ownerData = ownerInfo[msg.sender];
+    newTicket.ticketType = _ticketType;
+    newTicket.validUntil = _validUntil;
+    newTicket.owner = msg.sender;
+    newTicket.amount = msg.value;
+    newTicket.timestamp = block.timestamp;
+    newTicket.ipfsAddress = baseURI;
+
+    ownerData.ticketIds.push(ticketId);
+    ownerData.totalTickets += 1;
+
+     _safeMint(msg.sender, ticketId);
+
+     bool mintSuccessful = (owner() == msg.sender); 
+
+    if (mintSuccessful) {
+        emit TicketCreated(
+            _ticketType,
+            _validUntil,
+            msg.sender,
+            msg.value,
+            ticketId,
+            block.timestamp,
+            newTicket.ipfsAddress
+        );
         ticketId++;
-        emit TicketCreated (_ticketType, _validUntil, msg.sender, msg.value);
+        maxSupply--; // reduce the value of the max supply by 1
+    } else {
+        // if the mint is not successful, revert the transaction and return the msg.value to the msg.sender
+        // gas fees cannot be refunded
+        revert("Ticket creation failed. Please try again.");
+    }
+}
+
+
+    /*Function for the ticket owner to authorize the ticket to be used by the contract owner
+    and can only be called by the owner of the ticket
+    */ 
+
+    function confirmTicketUse(uint256 _ticketId) external {
+        require(msg.sender == tickets[_ticketId].owner, "Not ticket owner");
+        tickets[_ticketId].confirmTicketUse = true;
+        emit ConfirmedTicketUse(_ticketId, msg.sender);
     }
 
-    function useTicket(uint256 _ticketId) external {
-        require(_isApprovedOrOwner(msg.sender, _ticketId), "Not approved or owner");
-        require(!TICKET[_ticketId].used, "Ticket has already been used");
-        TICKET[_ticketId].used = true;
+//Function to mark ticket as used and can only be called by the contract deployer
+    function useTicket(uint256 _ticketId) external onlyOwner {
+        require(tickets[_ticketId].confirmTicketUse, "Ticket use not confirmed by owner");
+        require(!tickets[_ticketId].used, "Ticket has already been used");
+        require(block.timestamp <= tickets[_ticketId].validUntil, "Ticket validity has expired");
+        tickets[_ticketId].used = true;
+        usedTicketIds.push(_ticketId);
         emit TicketUsed(_ticketId, msg.sender);
     }
 
-    function getTicket(uint256 _ticketId)
-        external
-        view
-        returns (
-            string memory,
-            uint256,
-            uint256,
-            address,
-            bool
-        )
-    {
-        Ticket storage ticket = TICKET[_ticketId];
-        return (ticket.ticketType, ticket.amount, ticket.validUntil, ticket.owner, ticket.used);
+    function getUsedTickets() external view onlyOwner returns (uint256[] memory) {
+        return usedTicketIds;
     }
+
+     // Pause the contract
+    function pause() external onlyOwner {
+        paused = true;
+    }
+
+    // Unpause the contract
+    function unpause() external onlyOwner {
+        paused = false;
+    }
+
+    function getBalance() public view returns (uint256) {
+    return address(this).balance;
+}
+
+
+    // Withdraw funds from the contract
+    function withdraw() external onlyOwner {
+        uint256 balance = address(this).balance;
+        require(balance > 0, "Contract balance is zero");
+        payable(msg.sender).transfer(balance);
+    }
+
+    //Get ticket information
+   function getTicket(uint256 _ticketId)
+    external
+    view
+    returns (
+        string memory,
+        uint256,
+        uint256,
+        address,
+        uint256,
+        uint256,
+        string memory,
+        bool,
+        bool
+    )
+{
+    Ticket storage ticket = tickets[_ticketId];
+    return (
+        ticket.ticketType,
+        ticket.validUntil,
+        ticket.amount,
+        ticket.owner,
+        ticket.timestamp,
+        _ticketId,
+        ticket.ipfsAddress,  
+        ticket.used, 
+        ticket.confirmTicketUse
+    );
+}
+
+function getValidTicketCount(address _user) external view returns (uint256) {
+    uint256 validCount = 0;
+    OwnerInfo storage ownerData = ownerInfo[_user];
+    for (uint256 i = 0; i < ownerData.ticketIds.length; i++) {
+        uint256 ValidticketId = ownerData.ticketIds[i];
+        if (tickets[ValidticketId].validUntil >= block.timestamp && !tickets[ValidticketId].used) {
+            validCount++;
+        }
+    }
+    return validCount;
+}
+
+function getUsedTicketCount(address _user) external view returns (uint256) {
+    uint256 UsedTicketCount = 0;
+    OwnerInfo storage ownerData = ownerInfo[_user];
+    for (uint256 i = 0; i < ownerData.ticketIds.length; i++) {
+        uint256 UsedticketId = ownerData.ticketIds[i];
+        if (tickets[UsedticketId].used) {
+            UsedTicketCount++;
+        }
+    }
+    return UsedTicketCount;
+}
+
+    // ... (other functions)
 }
