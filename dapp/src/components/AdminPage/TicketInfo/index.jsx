@@ -4,6 +4,7 @@ import {
   contractAddress,
   convertToIntegar,
   convertUnixToTime,
+  checkValidity,
 } from '../../../utils/utils';
 import { useContractRead, useContract } from '@thirdweb-dev/react';
 import { ethers } from 'ethers';
@@ -59,7 +60,23 @@ const TicketInfo = (props) => {
           Date Created : <span> {convertUnixToTime(dateCreated)}</span>
         </p>
         <p>
-          Expiry Date : <span>{convertUnixToTime(validity)}</span>
+          Expiry Date :{' '}
+          <span className={styles.validityText}>
+            {convertUnixToTime(validity)}
+            {((confirmTicketUse !== used &&
+              checkValidity(validity) === 'Expired') ||
+              (!used &&
+                !confirmTicketUse &&
+                checkValidity(validity) === 'Expired')) && (
+              <span className={styles.expiredText}>Expired</span>
+            )}
+            {(confirmTicketUse && used) ||
+            (confirmTicketUse && checkValidity(validity) === 'Expired') ? (
+              <span className={styles.span}>Ticket Used</span>
+            ) : (
+              ''
+            )}
+          </span>
         </p>
         <p>
           Confirm Use : <span>{used ? 'confirmed' : 'Not confirmed'}</span>

@@ -23,5 +23,8 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^2",
     "vite": "^3"
+  },
+  "resolutions": {
+    "ethereumjs-abi": "https://registry.npmjs.org/ethereumjs-abi/-/ethereumjs-abi-0.6.8.tgz"
   }
 }

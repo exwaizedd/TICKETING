@@ -18,12 +18,12 @@ const UseTicket = (props) => {
         className={`${styles.article} ${styles.error}`}
         onClick={(e) => e.target.stopPropagation()}
       >
-        <p className={styles.errorText}>Opp!! Something went wrong</p>
+        <p className={styles.errorText}>Opp!! Something Went Wrong</p>
         <p>
-          There might be several reasons for this error if you did not decline
-          to proceed with this step. <br />
-          Please make sure the Ticket id is valid. If it is click the view
-          ticket info button to ;
+          If you did not decline to proceed with this step, then there might be
+          several reasons for this error . <br />
+          Please make sure the Ticket id is valid. If it is click the View
+          Ticket Info button to ;
         </p>
         <ul>
           <li>
@@ -36,7 +36,7 @@ const UseTicket = (props) => {
           </li>
           <li>Check if the ticket validity date has passed.</li>
         </ul>
-        <p>
+        <p className={styles.error__tryAgain}>
           If all the above checks were passed, check your network connection or
           try again later.
         </p>

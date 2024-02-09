@@ -34,41 +34,51 @@ export const convertUnixToTime = function (hex_string) {
   const hours = date.getHours();
   const minutes = date.getMinutes();
   const seconds = date.getSeconds();
-  return `${month}/${day}/${year}`;
+  return `${day}/${month}/${year}`;
 };
 
-// export const getValidity = function getValidity(hex_string1, hex_string2) {
-//   const createdDate = convertUnixToTime(hex_string1);
-//   const expiryDate = convertUnixToTime(hex_string2);
-//   const timeDiff = expiryDate.getTime() - createdDate.getTime();
-//   const dayDiff = timeDiff / (1000 * 60 * 60 * 24);
-//   if (dayDiff <= 0) {
-//     return 'expired';
+// function checkValidity(hexTimestamp) {
+//   const timestamp = parseInt(hexTimestamp);
+//   const expiryDate = new Date(timestamp * 1000);
+//   const currentDate = new Date();
+
+//   if (currentDate > expiryDate) {
+//     return `${convertUnixToTime(hexTimestamp)} Expired`;
+//   } else {
+//     const daysLeft = Math.ceil(
+//       (expiryDate - currentDate) / (1000 * 60 * 60 * 24)
+//     );
+//     return `Expires in ${daysLeft} day${
+//       daysLeft === 1 ? '' : 's'
+//     } (${expiryDate.toLocaleDateString()})`;
 //   }
-//   return `${dayDiff} Day(s)`;
-// };
+// }
 
-// export const getValidity = function getValidity(hex_string1, hex_string2) {
-//   const createdDate = new Date(convertToIntegar(hex_string1) * 1000);
-//   const expiryDate = new Date(convertToIntegar(hex_string2) * 1000);
-//   const timeDiff = expiryDate.getTime() - createdDate.getTime();
-//   const dayDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-//   if (dayDiff <= 0) {
-//     return 'expired';
-//   }
-//   return `${dayDiff} Day(s)`;
-// };
+export const checkValidity = function checkValidity(hexTimestamp) {
+  const timestamp = parseInt(hexTimestamp);
+  const expiryDate = new Date(timestamp * 1000);
+  const currentDate = new Date();
 
-export const getValidity = function (hex_string1, hex_string2) {
-  // const datetime1 = convertToIntegar(hex_string1) * 1000;
-  // const datetime2 = convertToIntegar(hex_string2) * 1000;
-  const diffSeconds = Math.abs(hex_string2 * 1000 - hex_string1 * 1000) / 1000;
-  const diffDays = diffSeconds / 86400;
-
-  if (diffDays <= 0) {
-    return 'expired';
+  if (currentDate > expiryDate) {
+    return `Expired`;
+  } else {
+    ('ticket used');
   }
-  return `${diffDays} Day(s)`;
+};
+
+export const getValidity = function getValidity(validity) {
+  // Set the date to check
+  const dateToCheck = new Date(convertUnixToTime(validity));
+
+  // Get the current date
+  const currentDate = new Date();
+
+  // Check if the date has passed
+  if (currentDate > dateToCheck) {
+    return 'Expired';
+  } else {
+    return convertUnixToTime(validity);
+  }
 };
 
 export const incrementIndex = function incrementIndex(num1, num2) {

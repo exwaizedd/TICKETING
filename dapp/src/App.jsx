@@ -10,6 +10,8 @@ import RequireAuth from './RequireAuth';
 import RequireAdminAuth from './RequireAminAuth';
 import AdminPage from './pages/AdminPage';
 import { useAddress } from '@thirdweb-dev/react';
+import Check from './pages/AboutUs';
+import AboutUs from './pages/AboutUs';
 
 export default function Home() {
   const address = useAddress();
@@ -22,6 +24,7 @@ export default function Home() {
           <Route index element={<DashBoardMain />} />
           <Route path='ticket' element={<TicketPage />} />
           <Route path='profile' element={<ProfilePage />} />
+          <Route path='about' element={<AboutUs />} />
         </Route>
       </Route>
       <Route path='/about' element={<AboutUsPage />}></Route>

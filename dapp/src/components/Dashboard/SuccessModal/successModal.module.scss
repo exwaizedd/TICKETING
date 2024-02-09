@@ -21,6 +21,11 @@
     flex-direction: column;
     justify-content: flex-start;
 
+    .centerHeader{
+      margin-inline: auto;
+      text-align: center;
+    }
+
     .errorText {
       margin: auto;
       font-size: a.$font-15;

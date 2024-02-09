@@ -3,7 +3,6 @@ import { useContract, useContractEvents } from '@thirdweb-dev/react';
 import styles from './successModal.module.scss';
 import {
   convertToIntegar,
-  convertFromUnix,
   convertUnixToTime,
   contractAddress,
 } from '../../../utils/utils';
@@ -43,17 +42,29 @@ const SuccessModal = (props) => {
               <div className={styles.icon_fix}></div>
             </div>
           </div>
-          <h3>Transaction Successful </h3>
+          <h3 className={styles.centerHeader}>Transaction Successful </h3>
           <p>Retrieving Ticket Info...</p>
         </div>
       </section>
     );
   }
 
-  const weiValue = ethers.BigNumber.from(
-    `${convertToIntegar(event[0].data.amount._hex)}`
-  );
-  const etherValue = ethers.utils.formatEther(weiValue);
+  // const weiValue = ethers.BigNumber.from(
+  //   `${convertToIntegar(event[0].data.amount._hex)}`
+  // );
+  // const etherValue = ethers.utils.formatEther(weiValue);
+
+  if (!event || !event[0] || !event[0].data || !event[0].data.amount) {
+    return (
+      <section className={styles.successModal}>
+        <div className={styles.successModal__cardContainer}>
+          <p className={styles.errorText}>
+            Event data is not available at the moment.
+          </p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
@@ -82,7 +93,10 @@ const SuccessModal = (props) => {
             <span>{convertToIntegar(event[0].data._ticketId._hex)}</span>
           </p>
           <p>
-            Ticket amount : <span>{`${etherValue} ETH`}</span>
+            Ticket amount :{' '}
+            <span>{`${
+              convertToIntegar(event[0].data.amount._hex) / Math.pow(10, 18)
+            } ETH`}</span>
           </p>
           <p>
             Validity :{' '}

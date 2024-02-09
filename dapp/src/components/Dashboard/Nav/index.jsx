@@ -12,6 +12,7 @@ const Nav = () => {
   const [showWallet, setShowWallet] = useState(false);
   const address = useAddress();
   const navigate = useNavigate();
+  const adminAccess = '0xb91131c2712e8AF7e19D0a617a01AE4a8573e9A1';
 
   const handleNavigate = () => {
     navigate('/dashboard/ticket');
@@ -20,6 +21,10 @@ const Nav = () => {
 
   const handleHomeNavigate = () => {
     navigate('/dashboard');
+    setShowLinks(false);
+  };
+  const handleProfileNavigate = () => {
+    navigate('/dashboard/profile');
     setShowLinks(false);
   };
 
@@ -40,10 +45,9 @@ const Nav = () => {
           </motion.li>
 
           <motion.li whileTap={{ scale: 0.8 }}>
-            <Link to='/about'>About Us</Link>
+            <Link to='/dashboard/about'>About Us</Link>
           </motion.li>
-          {address.toString().toLowerCase() ===
-            '0xb91131c2712e8af7e19d0a617a01ae4a8573e9a1' && (
+          {address.toString() === adminAccess && (
             <motion.li whileTap={{ scale: 0.8 }}>
               <Link to='/admin'>Admin</Link>
             </motion.li>
@@ -88,6 +92,7 @@ const Nav = () => {
           handleshowWallet={() => handleshowWallet()}
           handleNavigate={() => handleNavigate()}
           handleHomeNavigate={() => handleHomeNavigate()}
+          handleProfileNavigate={() => handleProfileNavigate()}
         />
       )}
       {showWallet && <Wallet onClick={() => setShowWallet(false)} />}

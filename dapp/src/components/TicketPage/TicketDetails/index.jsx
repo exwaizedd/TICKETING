@@ -6,7 +6,6 @@ import {
   useContractWrite,
   Web3Button,
 } from '@thirdweb-dev/react';
-import { contractAddress } from '../../../utils/utils';
 import { images } from '../../../utils/images';
 
 import { ethers } from 'ethers';
@@ -15,6 +14,8 @@ import {
   convertUnixToTime,
   incrementIndex,
   decreaseIndex,
+  contractAddress,
+  checkValidity,
 } from '../../../utils/utils';
 import { motion } from 'framer-motion';
 import Modal from '../../Modal';
@@ -22,14 +23,13 @@ import SuccessModal from '../SuccessModal';
 
 const TicketDetails = (props) => {
   const [isSuccessful, setIsSuccessful] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [showError, setShowError] = useState(false);
   const _ticketId = Number(props.ticketIDs[props.index]);
   const { contract } = useContract(contractAddress);
-  const {
-    mutateAsync,
-    error,
-    isLoading: load,
-  } = useContractWrite(contract, 'confirmTicketUse');
+  const { mutateAsync, isLoading: load } = useContractWrite(
+    contract,
+    'confirmTicketUse'
+  );
   const { data, isLoading } = useContractRead(contract, 'getTicket', _ticketId);
 
   const handleSuccess = (result) => {
@@ -38,8 +38,8 @@ const TicketDetails = (props) => {
   };
 
   const handleError = (error) => {
-    setIsError(true);
-    alert('Something went wrong');
+    setShowError(true);
+    alert('oops something went wrong');
   };
 
   if (isLoading || data === undefined) {
@@ -58,8 +58,8 @@ const TicketDetails = (props) => {
     dateCreated = data[4],
     ticketID = data[5]._hex,
     ipfs = data[6],
-    confirmTicketUse = data[7],
-    used = data[8];
+    used = data[7],
+    confirmTicketUse = data[8];
 
   const weiValue = ethers.BigNumber.from(`${convertToIntegar(amount)}`);
   const etherValue = ethers.utils.formatEther(weiValue);
@@ -127,7 +127,13 @@ const TicketDetails = (props) => {
             </div>
             <div className={styles.ticketInfoContainer__ticketDetailsInfo}>
               <h3>Status</h3>
-              <p>{used ? 'Used' : 'Not Used'}</p>
+              <p>
+                {used !== confirmTicketUse
+                  ? 'Confirmed for use'
+                  : confirmTicketUse
+                  ? 'used'
+                  : 'Not Used'}
+              </p>
             </div>
           </div>
           <div className={styles.ticketInfoContainer__ticketDetails}>
@@ -142,8 +148,19 @@ const TicketDetails = (props) => {
           </div>
           <div className={styles.ticketInfoContainer__ticketDetails}>
             <div className={styles.ticketInfoContainer__ticketDetailsInfo}>
-              <h3>Validity</h3>
-              <p>{convertUnixToTime(validity)}</p>
+              <h3>Validity Until</h3>
+              <p className={styles.validityText}>
+                {convertUnixToTime(validity)}{' '}
+                {((confirmTicketUse &&
+                  !used &&
+                  checkValidity(validity) === 'Expired') ||
+                  (!used &&
+                    !confirmTicketUse &&
+                    checkValidity(validity) === 'Expired')) && (
+                  <span className={styles.expiredText}>Expired</span>
+                )}
+                {confirmTicketUse && used ? <span>Ticket Used</span> : ''}
+              </p>
             </div>
             <div className={styles.ticketInfoContainer__ticketDetailsInfo}>
               <Web3Button
@@ -151,9 +168,14 @@ const TicketDetails = (props) => {
                 action={() => mutateAsync([ticketID])}
                 onSuccess={(result) => handleSuccess(result)}
                 onError={(error) => handleError(error)}
-                isDisabled={used ? true : false}
+                isDisabled={
+                  confirmTicketUse || checkValidity(validity) === 'Expired'
+                    ? true
+                    : false
+                }
                 className={`${styles.confirmUseButton} ${
-                  used && styles.isDisabled
+                  (confirmTicketUse || checkValidity(validity) === 'Expired') &&
+                  styles.isDisabled
                 }`}
               >
                 Use Ticket
@@ -167,14 +189,14 @@ const TicketDetails = (props) => {
           <SuccessModal isLoading={true} />
         </Modal>
       )}
-      {isError && (
-        <Modal onClick={setIsError(false)}>
-          <SuccessModal error={isError} />
+      {showError && (
+        <Modal onClick={setShowError(false)}>
+          <SuccessModal error={true} isLoading={false} />
         </Modal>
       )}
       {isSuccessful && (
         <Modal onClick={setIsSuccessful(false)}>
-          <SuccessModal isSuccessful={isSuccessful} />
+          <SuccessModal isSuccessful={isSuccessful} isLoading={false} />
         </Modal>
       )}
     </>

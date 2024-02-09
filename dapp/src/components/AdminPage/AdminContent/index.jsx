@@ -62,8 +62,9 @@ const AdminBody = (props) => {
     setOnSuccessful(true);
     setTicketId('');
   };
-  const handleError = (error) => {
+  const handleError = (Error) => {
     setShowError(true);
+    console.log(Error);
   };
 
   const handleWithdrawalSuccess = (result) => {
@@ -89,7 +90,7 @@ const AdminBody = (props) => {
             {isLoadingContractBalance
               ? 'loading balance...'
               : `${(
-                  convertFromUnix(contractBalance._hex) / Math.pow(10, 18)
+                  parseInt(contractBalance._hex, 16) / Math.pow(10, 18)
                 ).toFixed(4)} ETH`}
           </p>
           <div className={styles.TicketInfoContainer}>
@@ -139,13 +140,9 @@ const AdminBody = (props) => {
             view Ticket Info
           </Web3Button>
           <Web3Button
-            action={() =>
-              mutateAsync(ticketId, {
-                gasLimit: 3000000, // override default gas limit
-              })
-            }
+            action={() => mutateAsync([ticketId])}
             onSuccess={(result) => handleSuccess(result)}
-            onError={(error) => handleError(error)}
+            onError={(Error) => handleError(Error)}
             contractAddress={contractAddress}
             className={`${styles.web3button}  ${
               (!ticketId || ticketId === '' || !regex.test(ticketId)) &&
@@ -164,11 +161,7 @@ const AdminBody = (props) => {
             }
             onSuccess={(result) => handleWithdrawalSuccess(result)}
             onError={(error) => handleWithdrawalError(error)}
-            className={`${styles.web3button}  ${
-              (!ticketId || ticketId === '' || !regex.test(ticketId)) &&
-              styles.disabled
-            }`}
-            isDisabled={!ticketId || ticketId === '' || !regex.test(ticketId)}
+            className={`${styles.web3button}`}
           >
             Withdraw Balance
           </Web3Button>
